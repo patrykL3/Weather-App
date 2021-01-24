@@ -1,6 +1,7 @@
 package pl.patryklubik.controller;
 
 
+import javafx.event.ActionEvent;
 import pl.patryklubik.view.ViewFactory;
 
 import javafx.fxml.FXML;
@@ -15,13 +16,22 @@ import java.util.ResourceBundle;
  * Create by Patryk Łubik on 23.01.2021.
  */
 
-public class Controller extends BaseController implements Initializable {
-
-//    @FXML
-//    components
+public class StarterWindowController extends BaseController implements Initializable {
 
 
-    public Controller(ViewFactory viewFactory, String fxmlName) {
+    @FXML
+    private TextField DefaultCityField;
+
+    @FXML
+    private Label errorLabel;
+
+    @FXML
+    void DefaultCitySelectButtonAction(ActionEvent event) {
+
+    }
+
+
+    public StarterWindowController(ViewFactory viewFactory, String fxmlName) {
         super(viewFactory, fxmlName);
     }
 

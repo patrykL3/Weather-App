@@ -18,15 +18,18 @@ import java.util.ArrayList;
 
 public class ViewFactory {
 
+    private final String STYLESHEET_PATH = "pl/patryklubik/view/Stylesheet.css";
+    private final String MAIN_ICON_PATH = "pl/patryklubik/view/mainIcon.png";
+
     private ArrayList<Stage> activeStages;
 
     public ViewFactory() {
         activeStages = new ArrayList<Stage>();
     }
 
-    public void showWindow(){
+    public void showStarterWindow(){
 
-        BaseController controller = new Controller(this, "Window.fxml");
+        BaseController controller = new StarterWindowController(this, "StarterWindow.fxml");
         initializeStage(controller,false);
 
     }
@@ -45,8 +48,8 @@ public class ViewFactory {
         Scene scene = new Scene(parent);
         Stage stage = new Stage();
         stage.setScene(scene);
-        scene.getStylesheets().add("path.css");
-        stage.getIcons().add(new Image("pl/patryklubik/view/mainIcon.png"));
+        scene.getStylesheets().add(STYLESHEET_PATH);
+//        stage.getIcons().add(new Image(MAIN_ICON_PATH));
         stage.setTitle(chooseWindowTitle(baseController.getFxmlName()));
         stage.show();
         stage.setResizable(resizable);
@@ -55,10 +58,10 @@ public class ViewFactory {
 
     private String chooseWindowTitle(String fxmlName) {
         switch (fxmlName) {
-            case "Window.fxml":
-                return "WindowTitle";
+            case "SettingsWindow.fxml":
+                return "Ustawienia";
             default:
-                return "WindowTitle";
+                return "Weather-App";
         }
     }
 

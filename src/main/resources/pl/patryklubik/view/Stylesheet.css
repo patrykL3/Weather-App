@@ -1,0 +1,16 @@
+
+
+.container {
+
+}
+
+
+.big{
+   -fx-font-size: 20px;
+}
+
+.bold {
+    -fx-font-weight: bold;
+}
+
+
