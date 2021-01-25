@@ -16,7 +16,7 @@ public class ProgramState {
     }
 
     public void init() {
-        viewFactory.showMainWindow();
+        viewFactory.showStarterWindow();
     }
 
 }
