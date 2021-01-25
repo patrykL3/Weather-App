@@ -31,7 +31,12 @@ public class ViewFactory {
 
         BaseController controller = new StarterWindowController(this, "StarterWindow.fxml");
         initializeStage(controller,false);
+    }
 
+    public void showMainWindow(){
+
+        BaseController controller = new MainWindowController(this, "MainWindow.fxml");
+        initializeStage(controller,false);
     }
 
     private void initializeStage(BaseController baseController, boolean resizable) {

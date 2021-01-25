@@ -27,7 +27,9 @@ public class StarterWindowController extends BaseController implements Initializ
 
     @FXML
     void DefaultCitySelectButtonAction(ActionEvent event) {
-
+        viewFactory.showMainWindow();
+        Stage stage = (Stage) errorLabel.getScene().getWindow();
+        viewFactory.closeStage(stage);
     }
 
 

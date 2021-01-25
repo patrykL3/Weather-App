@@ -4,6 +4,11 @@
 
 }
 
+.next_day {
+    //-fx-background-color: red;
+    -fx-border-color: red;
+    //fx-border: red;
+}
 
 .big{
    -fx-font-size: 20px;
