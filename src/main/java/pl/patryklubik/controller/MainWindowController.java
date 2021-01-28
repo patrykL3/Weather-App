@@ -7,10 +7,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import pl.patryklubik.WeatherManager;
 import pl.patryklubik.view.ViewFactory;
 
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Create by Patryk Łubik on 23.01.2021.
@@ -18,20 +20,10 @@ import java.util.ResourceBundle;
 
 public class MainWindowController extends BaseController implements Initializable {
 
+    private WeatherManager weatherManager;
 
-//    @FXML
-//    private TextField DefaultCityField;
-//
-//    @FXML
-//    private Label errorLabel;
-//
-//    @FXML
-//    void DefaultCitySelectButtonAction(ActionEvent event) {
-//        viewFactory.showMainWindow();
-//        Stage stage = (Stage) errorLabel.getScene().getWindow();
-//        viewFactory.closeStage(stage);
-//    }
-
+    @FXML
+    Label dateLabel;
 
     @FXML
     void openInfoPageAction(ActionEvent event) {
@@ -54,13 +46,15 @@ public class MainWindowController extends BaseController implements Initializabl
     }
 
 
-    public MainWindowController(ViewFactory viewFactory, String fxmlName) {
-        super(viewFactory, fxmlName);
+    public MainWindowController(WeatherManager weatherManager, ViewFactory viewFactory, String fxmlName) {
+        super(weatherManager, viewFactory, fxmlName);
+        this.weatherManager = weatherManager;
     }
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
 
     }
 }

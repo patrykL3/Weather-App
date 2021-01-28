@@ -61,7 +61,8 @@
          </children>
       </VBox>
       <Label layoutX="120.0" layoutY="63.0" prefHeight="42.0" prefWidth="114.0" text="Niedziela" />
-      <Label layoutX="247.0" layoutY="63.0" prefHeight="42.0" prefWidth="124.0" text="25.01.2021" />
+      <Label fx:id="dateLabel" layoutX="247.0" layoutY="63.0" prefHeight="42.0" prefWidth="124.0"
+             text="25.01.2021" />
       <VBox layoutX="20.0" layoutY="147.0" prefHeight="124.0" prefWidth="214.0">
          <children>
             <Label prefHeight="18.0" prefWidth="197.0" text="Warszawa" />

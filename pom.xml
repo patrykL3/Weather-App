@@ -11,6 +11,16 @@
     </properties>
     <dependencies>
         <dependency>
+            <groupId>com.github.prominence</groupId>
+            <artifactId>openweathermap-api</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.75</version>
+        </dependency>
+        <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>11</version>

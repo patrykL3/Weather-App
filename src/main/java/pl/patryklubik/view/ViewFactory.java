@@ -1,6 +1,7 @@
 package pl.patryklubik.view;
 
 
+import pl.patryklubik.WeatherManager;
 import pl.patryklubik.controller.*;
 
 import javafx.fxml.FXMLLoader;
@@ -20,22 +21,25 @@ public class ViewFactory {
 
     private final String STYLESHEET_PATH = "pl/patryklubik/view/Stylesheet.css";
     private final String MAIN_ICON_PATH = "pl/patryklubik/view/mainIcon.png";
+    private WeatherManager weatherManager;
 
     private ArrayList<Stage> activeStages;
 
-    public ViewFactory() {
+    public ViewFactory(WeatherManager weatherManager) {
+
+        this.weatherManager = weatherManager;
         activeStages = new ArrayList<Stage>();
     }
 
     public void showStarterWindow(){
 
-        BaseController controller = new StarterWindowController(this, "StarterWindow.fxml");
+        BaseController controller = new StarterWindowController(weatherManager, this, "StarterWindow.fxml");
         initializeStage(controller,false);
     }
 
     public void showMainWindow(){
 
-        BaseController controller = new MainWindowController(this, "MainWindow.fxml");
+        BaseController controller = new MainWindowController(weatherManager,this, "MainWindow.fxml");
         initializeStage(controller,false);
     }
 
@@ -73,5 +77,9 @@ public class ViewFactory {
     public  void closeStage(Stage stageToClose){
         stageToClose.close();
         activeStages.remove(stageToClose);
+    }
+
+    public boolean isMainViewInitialized() {
+        return false;
     }
 }

@@ -4,8 +4,13 @@ module WeatherApp {
     requires javafx.graphics;
     requires javafx.web;
 
+    requires fastjson;
+    requires openweathermap.api;
+    requires java.sql;
+
     opens pl.patryklubik;
     opens pl.patryklubik.view;
     opens pl.patryklubik.controller;
-//    opens pl.patryklubik.model;
+    opens pl.patryklubik.controller.services;
+    opens pl.patryklubik.model;
 }
