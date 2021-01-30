@@ -3,7 +3,6 @@ package pl.patryklubik.controller.services;
 import com.github.prominence.openweathermap.api.HourlyForecastRequester;
 import com.github.prominence.openweathermap.api.WeatherRequester;
 import com.github.prominence.openweathermap.api.constants.Accuracy;
-import com.github.prominence.openweathermap.api.constants.Language;
 import com.github.prominence.openweathermap.api.constants.Unit;
 import com.github.prominence.openweathermap.api.exception.DataNotFoundException;
 import com.github.prominence.openweathermap.api.model.response.HourlyForecast;
@@ -14,6 +13,7 @@ import pl.patryklubik.WeatherManager;
 import pl.patryklubik.controller.ResultDownloadWeatherData;
 import pl.patryklubik.model.City;
 import pl.patryklubik.model.CityType;
+import pl.patryklubik.model.Config;
 
 
 /**
@@ -24,7 +24,6 @@ public class WeatherDataService extends Service<ResultDownloadWeatherData> {
 
     private WeatherManager weatherManager;
     private City city;
-    private final String appLanguage = Language.POLISH;
     private final String unit = Unit.METRIC_SYSTEM;
     private final String accuracy = Accuracy.ACCURATE;
 
@@ -70,7 +69,7 @@ public class WeatherDataService extends Service<ResultDownloadWeatherData> {
     private HourlyForecast getWeatherForecast() {
         HourlyForecastRequester forecastRequester = weatherManager.getHourlyForecastRequester();
         HourlyForecast forecastResponse = forecastRequester
-                .setLanguage(appLanguage)
+                .setLanguage(Config.getAppLanguage())
                 .setUnitSystem(unit)
                 .setAccuracy(accuracy)
                 .getByCityName(city.getCityName());
@@ -82,7 +81,7 @@ public class WeatherDataService extends Service<ResultDownloadWeatherData> {
         WeatherRequester weatherRequester = weatherManager.getWeatherRequester();
 
         Weather weatherResponse = weatherRequester
-                .setLanguage(appLanguage)
+                .setLanguage(Config.getAppLanguage())
                 .setUnitSystem(unit)
                 .setAccuracy(accuracy)
                 .getByCityName(city.getCityName());

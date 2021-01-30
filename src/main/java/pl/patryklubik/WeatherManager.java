@@ -16,8 +16,8 @@ import pl.patryklubik.model.Config;
 public class WeatherManager {
 
     private ObservableList<City> cities = FXCollections.observableArrayList();
-
     private final OpenWeatherMapManager openWeatherManager;
+//    private DateManager dataManager;
 
     public WeatherManager() {
         openWeatherManager = new OpenWeatherMapManager(Config.getToken());

@@ -60,9 +60,8 @@
             </HBox>
          </children>
       </VBox>
-      <Label layoutX="120.0" layoutY="63.0" prefHeight="42.0" prefWidth="114.0" text="Niedziela" />
-      <Label fx:id="dateLabel" layoutX="247.0" layoutY="63.0" prefHeight="42.0" prefWidth="124.0"
-             text="25.01.2021" />
+      <Label fx:id="currentDayOfWeekLabel" layoutX="126.0" layoutY="43.0" prefHeight="42.0" prefWidth="114.0" text="Niedziela" />
+      <Label fx:id="defaultCityDateLabel" layoutX="253.0" layoutY="43.0" prefHeight="42.0" prefWidth="124.0" text="25.01.2021" />
       <VBox layoutX="20.0" layoutY="147.0" prefHeight="124.0" prefWidth="214.0">
          <children>
             <Label prefHeight="18.0" prefWidth="197.0" text="Warszawa" />
@@ -99,5 +98,6 @@
       </VBox>
       <Separator layoutX="-4.0" layoutY="115.0" prefHeight="3.0" prefWidth="510.0" />
       <Separator layoutY="291.0" prefHeight="3.0" prefWidth="510.0" />
+      <Label fx:id="defaultCityTimeZone" layoutX="173.0" layoutY="74.0" prefHeight="42.0" prefWidth="124.0" text="Strefa czasowa:" />
     </children>
 </AnchorPane>

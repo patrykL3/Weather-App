@@ -7,6 +7,7 @@ module WeatherApp {
     requires fastjson;
     requires openweathermap.api;
     requires java.sql;
+    requires com.ibm.icu;
 
     opens pl.patryklubik;
     opens pl.patryklubik.view;

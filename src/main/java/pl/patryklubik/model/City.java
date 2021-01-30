@@ -46,4 +46,5 @@ public class City {
     public void setWeatherForecast(HourlyForecast weatherForecast) {
         this.weatherForecast = weatherForecast;
     }
+
 }
