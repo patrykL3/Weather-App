@@ -34,7 +34,8 @@ public class WeatherDataService extends Service<ResultDownloadWeatherData> {
     }
 
     public void setCityName(String cityName) {
-        city.setCityName(cityName);
+        String correctedName = cityName.substring(0, 1).toUpperCase() + cityName.substring(1).toLowerCase();
+        city.setCityName(correctedName);
     }
 
     @Override
