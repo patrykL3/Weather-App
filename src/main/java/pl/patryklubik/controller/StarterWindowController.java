@@ -1,7 +1,7 @@
 package pl.patryklubik.controller;
 
 
-import pl.patryklubik.WeatherManager;
+import pl.patryklubik.WeatherAppManager;
 import pl.patryklubik.controller.services.WeatherDataService;
 import pl.patryklubik.model.CityType;
 import pl.patryklubik.view.ViewFactory;
@@ -26,7 +26,7 @@ public class StarterWindowController extends BaseController {
 
     @FXML
     void DefaultCitySelectButtonAction() {
-        defaultCityField.setText("warszawa");
+        defaultCityField.setText("londyn");
         if (fieldAreValid()) {
         weatherDataService.setCityName(defaultCityField.getText());
         weatherDataService.restart();
@@ -38,9 +38,9 @@ public class StarterWindowController extends BaseController {
         }
     }
 
-    public StarterWindowController(WeatherManager weatherManager, ViewFactory viewFactory, String fxmlName) {
-        super(weatherManager, viewFactory, fxmlName);
-        this.weatherDataService = new WeatherDataService(weatherManager, CityType.DEFAULT);
+    public StarterWindowController(WeatherAppManager weatherAppManager, ViewFactory viewFactory, String fxmlName) {
+        super(weatherAppManager, viewFactory, fxmlName);
+        this.weatherDataService = new WeatherDataService(weatherAppManager, CityType.DEFAULT);
     }
 
     private boolean fieldAreValid() {

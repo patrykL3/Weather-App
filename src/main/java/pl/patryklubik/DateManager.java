@@ -3,6 +3,7 @@ package pl.patryklubik;
 import com.github.prominence.openweathermap.api.constants.Language;
 import pl.patryklubik.model.Config;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -42,6 +43,24 @@ public class DateManager {
         return simpleDateFormat.format(calendar.getTime());
     }
 
+    public String getCurrentDayNumberInCountry(String countryCode){
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd");
+        GregorianCalendar calendar = new GregorianCalendar();
+        simpleDateFormat.setTimeZone(getTimeZone(countryCode));
+
+        return simpleDateFormat.format(calendar.getTime());
+    }
+
+    public String getDayNumberInCountry(String countryCode, long time){
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd");
+        GregorianCalendar calendar = new GregorianCalendar();
+        simpleDateFormat.setTimeZone(getTimeZone(countryCode));
+        calendar.setTimeInMillis(time);
+
+        return simpleDateFormat.format(calendar.getTime());
+    }
 
     private TimeZone getTimeZone(String countryCode) {
         String countryTimeZoneId = com.ibm.icu.util.TimeZone.getAvailableIDs(countryCode)[0];

@@ -12,6 +12,7 @@ public class City {
     CityType cityType;
     Weather currentDayWeather;
     HourlyForecast weatherForecast;
+    FewDaysForecast weatherFewDaysForecast;
 
 
 
@@ -35,6 +36,15 @@ public class City {
     public Weather getCurrentDayWeather() {
         return currentDayWeather;
     }
+
+    public FewDaysForecast getWeatherFewDaysForecast() {
+        return weatherFewDaysForecast;
+    }
+
+    public void setWeatherDailyForecast(FewDaysForecast weatherFewDaysForecast) {
+        this.weatherFewDaysForecast = weatherFewDaysForecast;
+    }
+
     public void setCityName(String cityName) {
         this.cityName = cityName;
     }
@@ -43,7 +53,7 @@ public class City {
         this.currentDayWeather = currentDayWeather;
     }
 
-    public void setWeatherForecast(HourlyForecast weatherForecast) {
+    public void setWeatherHourlyForecast(HourlyForecast weatherForecast) {
         this.weatherForecast = weatherForecast;
     }
 

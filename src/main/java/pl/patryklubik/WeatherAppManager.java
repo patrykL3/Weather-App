@@ -13,13 +13,12 @@ import pl.patryklubik.model.Config;
  * Create by Patryk Łubik on 26.01.2021.
  */
 
-public class WeatherManager {
+public class WeatherAppManager {
 
     private ObservableList<City> cities = FXCollections.observableArrayList();
     private final OpenWeatherMapManager openWeatherManager;
-//    private DateManager dataManager;
 
-    public WeatherManager() {
+    public WeatherAppManager() {
         openWeatherManager = new OpenWeatherMapManager(Config.getToken());
         cities.add(new City(CityType.DEFAULT));
         cities.add(new City(CityType.ADDITIONAL));

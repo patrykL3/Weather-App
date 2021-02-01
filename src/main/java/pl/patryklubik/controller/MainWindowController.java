@@ -1,7 +1,6 @@
 package pl.patryklubik.controller;
 
 
-import com.github.prominence.openweathermap.api.model.Snow;
 import com.github.prominence.openweathermap.api.model.response.Weather;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,8 +10,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import pl.patryklubik.DateManager;
-import pl.patryklubik.WeatherManager;
+import pl.patryklubik.WeatherAppManager;
 import pl.patryklubik.model.CityType;
+import pl.patryklubik.model.FewDaysForecast;
 import pl.patryklubik.view.ViewFactory;
 
 import java.net.URL;
@@ -24,7 +24,7 @@ import java.util.*;
 
 public class MainWindowController extends BaseController implements Initializable {
 
-    private WeatherManager weatherManager;
+    private WeatherAppManager weatherAppManager;
     private DateManager dateManager;
 
 
@@ -88,9 +88,9 @@ public class MainWindowController extends BaseController implements Initializabl
     }
 
 
-    public MainWindowController(WeatherManager weatherManager, ViewFactory viewFactory, String fxmlName) {
-        super(weatherManager, viewFactory, fxmlName);
-        this.weatherManager = weatherManager;
+    public MainWindowController(WeatherAppManager weatherAppManager, ViewFactory viewFactory, String fxmlName) {
+        super(weatherAppManager, viewFactory, fxmlName);
+        this.weatherAppManager = weatherAppManager;
         dateManager = new DateManager();
     }
 
@@ -99,14 +99,21 @@ public class MainWindowController extends BaseController implements Initializabl
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setHeaderTimeData();
         setTodayCityData(CityType.DEFAULT);
-
-        if(weatherManager.getCityByType(CityType.ADDITIONAL).getCityName() != null) {
+        if(weatherAppManager.getCityByType(CityType.ADDITIONAL).getCityName() != null) {
             setTodayCityData(CityType.ADDITIONAL);
         }
+        setWeatherDailyForecasts(CityType.DEFAULT);
+    }
+
+    private void setWeatherDailyForecasts(CityType cityType) {
+        FewDaysForecast fewDaysForecast = weatherAppManager.getCityByType(cityType).getWeatherFewDaysForecast();
+
+        fewDaysForecast.getNextFewDaysForecast();
+
     }
 
     private void setTodayCityData(CityType cityType) {
-        Weather todayWeather = weatherManager.getCityByType(cityType).getCurrentDayWeather();
+        Weather todayWeather = weatherAppManager.getCityByType(cityType).getCurrentDayWeather();
 
         if (cityType == CityType.DEFAULT) {
             fillDefaultTodaysLabels(todayWeather);
@@ -114,57 +121,53 @@ public class MainWindowController extends BaseController implements Initializabl
             fillAdditionalsTodaysLabels(todayWeather);
         }
 
-        setWeatherPicture(todayWeather);
+        setCurrentWeatherPicture(todayWeather);
     }
 
-    private void setWeatherPicture(Weather todayWeather) {
+    private void setCurrentWeatherPicture(Weather todayWeather) {
         Image weatherPicture = new Image("/default.png");
 
-        if(isItSnowing(todayWeather)) {
+        if(isItSnowingNow(todayWeather)) {
             weatherPicture = new Image("/snow.png");
-        } else if (isItRaining(todayWeather)) {
+        } else if (isItRainingNow(todayWeather)) {
             weatherPicture = new Image("/rain.png");
         }
 
         defaultCityCurrentDayImage.setImage(weatherPicture);
     }
 
-    private boolean isItSnowing(Weather todayWeather) {
+    private boolean isItSnowingNow(Weather todayWeather) {
         try {
             byte snowVolume = todayWeather.getSnow().getSnowVolumeLast3Hrs();
             if(snowVolume > 0) {
                 return true;
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        } catch (Exception ex) {}
 
         return false;
     }
 
-    private boolean isItRaining(Weather todayWeather) {
+    private boolean isItRainingNow(Weather todayWeather) {
         try {
             byte rainVolume = todayWeather.getRain().getRainVolumeLast3Hrs();
             if(rainVolume > 0) {
                 return true;
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        } catch (Exception ex) {}
 
         return false;
     }
 
 
     private void fillAdditionalsTodaysLabels(Weather todayWeather) {
-        additionalCityName.setText(weatherManager.getCityByType(CityType.DEFAULT).getCityName());
+        additionalCityName.setText(weatherAppManager.getCityByType(CityType.ADDITIONAL).getCityName());
         additionalCityPressure.setText("Ciśnienie: " + String.valueOf(todayWeather.getPressure()) + " hPa");
         additionalCityHumidity.setText("Wilgotność: " + String.valueOf(todayWeather.getHumidityPercentage()) + "%");
         additionalCityCurrentTemperature.setText(todayWeather.getTemperature() + " °C");
     }
 
     private void setHeaderTimeData() {
-        Weather todayWeather = weatherManager.getCityByType(CityType.DEFAULT).getCurrentDayWeather();
+        Weather todayWeather = weatherAppManager.getCityByType(CityType.DEFAULT).getCurrentDayWeather();
         long time = todayWeather.getDataCalculationDate().getTime();
         String countryCode = todayWeather.getCountry();
 
@@ -175,7 +178,7 @@ public class MainWindowController extends BaseController implements Initializabl
     }
 
     private void fillDefaultTodaysLabels(Weather todayWeather) {
-        defaultCityName.setText(weatherManager.getCityByType(CityType.DEFAULT).getCityName());
+        defaultCityName.setText(weatherAppManager.getCityByType(CityType.DEFAULT).getCityName());
         defaultCityPressure.setText("Ciśnienie: " + String.valueOf(todayWeather.getPressure()) + " hPa");
         defaultCityHumidity.setText("Wilgotność: " + String.valueOf(todayWeather.getHumidityPercentage()) + "%");
         defaultCityCurrentTemperature.setText(todayWeather.getTemperature() + " °C");

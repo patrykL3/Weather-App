@@ -1,13 +1,12 @@
 package pl.patryklubik.view;
 
 
-import pl.patryklubik.WeatherManager;
+import pl.patryklubik.WeatherAppManager;
 import pl.patryklubik.controller.*;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,25 +20,25 @@ public class ViewFactory {
 
     private final String STYLESHEET_PATH = "pl/patryklubik/view/Stylesheet.css";
     private final String MAIN_ICON_PATH = "pl/patryklubik/view/mainIcon.png";
-    private WeatherManager weatherManager;
+    private WeatherAppManager weatherAppManager;
 
     private ArrayList<Stage> activeStages;
 
-    public ViewFactory(WeatherManager weatherManager) {
+    public ViewFactory(WeatherAppManager weatherAppManager) {
 
-        this.weatherManager = weatherManager;
+        this.weatherAppManager = weatherAppManager;
         activeStages = new ArrayList<Stage>();
     }
 
     public void showStarterWindow(){
 
-        BaseController controller = new StarterWindowController(weatherManager, this, "StarterWindow.fxml");
+        BaseController controller = new StarterWindowController(weatherAppManager, this, "StarterWindow.fxml");
         initializeStage(controller,false);
     }
 
     public void showMainWindow(){
 
-        BaseController controller = new MainWindowController(weatherManager,this, "MainWindow.fxml");
+        BaseController controller = new MainWindowController(weatherAppManager,this, "MainWindow.fxml");
         initializeStage(controller,false);
     }
 

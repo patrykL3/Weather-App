@@ -1,6 +1,5 @@
 package pl.patryklubik;
 
-import com.github.prominence.openweathermap.api.OpenWeatherMapManager;
 import pl.patryklubik.view.ViewFactory;
 
 
@@ -14,7 +13,7 @@ public class ProgramState {
 //    private UserData;
 
     public ProgramState() {
-        viewFactory = new ViewFactory(new WeatherManager());
+        viewFactory = new ViewFactory(new WeatherAppManager());
     }
 
     public void init() {

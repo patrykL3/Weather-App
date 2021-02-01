@@ -9,11 +9,12 @@ import com.github.prominence.openweathermap.api.model.response.HourlyForecast;
 import com.github.prominence.openweathermap.api.model.response.Weather;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import pl.patryklubik.WeatherManager;
+import pl.patryklubik.WeatherAppManager;
 import pl.patryklubik.controller.ResultDownloadWeatherData;
 import pl.patryklubik.model.City;
 import pl.patryklubik.model.CityType;
 import pl.patryklubik.model.Config;
+import pl.patryklubik.model.FewDaysForecast;
 
 
 /**
@@ -22,15 +23,15 @@ import pl.patryklubik.model.Config;
 
 public class WeatherDataService extends Service<ResultDownloadWeatherData> {
 
-    private WeatherManager weatherManager;
+    private WeatherAppManager weatherAppManager;
     private City city;
     private final String unit = Unit.METRIC_SYSTEM;
     private final String accuracy = Accuracy.ACCURATE;
 
 
-    public WeatherDataService(WeatherManager weatherManager, CityType cityType) {
-        this.weatherManager = weatherManager;
-        this.city = weatherManager.getCityByType(cityType);
+    public WeatherDataService(WeatherAppManager weatherAppManager, CityType cityType) {
+        this.weatherAppManager = weatherAppManager;
+        this.city = weatherAppManager.getCityByType(cityType);
     }
 
     public void setCityName(String cityName) {
@@ -53,7 +54,8 @@ public class WeatherDataService extends Service<ResultDownloadWeatherData> {
         try {
 
             city.setCurrentDayWeather(this.getCurrentDayWeather());
-            city.setWeatherForecast(this.getWeatherForecast());
+//            city.setWeatherForecast(this.getWeatherForecast());
+            city.setWeatherDailyForecast( new FewDaysForecast(this.getWeatherForecast()));
 
         } catch (DataNotFoundException e) {
             e.printStackTrace();
@@ -68,7 +70,7 @@ public class WeatherDataService extends Service<ResultDownloadWeatherData> {
     }
 
     private HourlyForecast getWeatherForecast() {
-        HourlyForecastRequester forecastRequester = weatherManager.getHourlyForecastRequester();
+        HourlyForecastRequester forecastRequester = weatherAppManager.getHourlyForecastRequester();
         HourlyForecast forecastResponse = forecastRequester
                 .setLanguage(Config.getAppLanguage())
                 .setUnitSystem(unit)
@@ -79,7 +81,7 @@ public class WeatherDataService extends Service<ResultDownloadWeatherData> {
     }
 
     private Weather getCurrentDayWeather(){
-        WeatherRequester weatherRequester = weatherManager.getWeatherRequester();
+        WeatherRequester weatherRequester = weatherAppManager.getWeatherRequester();
 
         Weather weatherResponse = weatherRequester
                 .setLanguage(Config.getAppLanguage())
