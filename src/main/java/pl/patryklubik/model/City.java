@@ -24,6 +24,9 @@ public class City {
         this.cityType = cityType;
     }
 
+    public String getCountryCode() {
+        return currentDayWeather.getCountry();
+    }
 
     public String getCityName() {
         return cityName;

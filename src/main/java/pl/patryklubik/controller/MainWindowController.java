@@ -5,13 +5,20 @@ import com.github.prominence.openweathermap.api.model.response.Weather;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+//import javafx.fxd.Duplicator;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import pl.patryklubik.DateManager;
 import pl.patryklubik.WeatherAppManager;
+import pl.patryklubik.model.City;
 import pl.patryklubik.model.CityType;
+import pl.patryklubik.model.DailyForecast;
 import pl.patryklubik.model.FewDaysForecast;
 import pl.patryklubik.view.ViewFactory;
 
@@ -27,6 +34,11 @@ public class MainWindowController extends BaseController implements Initializabl
     private WeatherAppManager weatherAppManager;
     private DateManager dateManager;
 
+    @FXML
+    private VBox myVBox;
+
+    @FXML
+    private AnchorPane anch;
 
     @FXML
     private Label currentDayOfWeekLabel;
@@ -65,7 +77,39 @@ public class MainWindowController extends BaseController implements Initializabl
     private ImageView defaultCityCurrentDayImage;
 
     @FXML
-    private Image imageTry;
+    private Label dayOfWeekLabelD1;
+    @FXML
+    private Label dayOfWeekLabelD2;
+    @FXML
+    private Label dayOfWeekLabelD3;
+    @FXML
+    private Label dayOfWeekLabelD4;
+    @FXML
+    private Label dayOfWeekLabelD5;
+
+    @FXML
+    private Label temperatureLabelD1;
+    @FXML
+    private Label temperatureLabelD2;
+    @FXML
+    private Label temperatureLabelD3;
+    @FXML
+    private Label temperatureLabelD4;
+    @FXML
+    private Label temperatureLabelD5;
+
+    @FXML
+    private ImageView weatherImageD1;
+    @FXML
+    private ImageView weatherImageD2;
+    @FXML
+    private ImageView weatherImageD3;
+    @FXML
+    private ImageView weatherImageD4;
+    @FXML
+    private ImageView weatherImageD5;
+
+
 
     @FXML
     void openInfoPageAction(ActionEvent event) {
@@ -99,17 +143,116 @@ public class MainWindowController extends BaseController implements Initializabl
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setHeaderTimeData();
         setTodayCityData(CityType.DEFAULT);
+        setWeatherDailyForecasts(CityType.DEFAULT);
+
         if(weatherAppManager.getCityByType(CityType.ADDITIONAL).getCityName() != null) {
             setTodayCityData(CityType.ADDITIONAL);
         }
-        setWeatherDailyForecasts(CityType.DEFAULT);
+
     }
 
     private void setWeatherDailyForecasts(CityType cityType) {
         FewDaysForecast fewDaysForecast = weatherAppManager.getCityByType(cityType).getWeatherFewDaysForecast();
+        List<DailyForecast> weatherDailyForecasts = fewDaysForecast.getNextFewDaysForecast();
 
-        fewDaysForecast.getNextFewDaysForecast();
+        if(cityType == CityType.DEFAULT) {
+            setWeekdayLabelsForDefaultCity(weatherDailyForecasts);
+            setForecastTemperatureLabelsInDefaultCity(weatherDailyForecasts);
+            setWeatherImagesForDefaultCity(weatherDailyForecasts);
+        } else if(cityType == CityType.ADDITIONAL) {
+            setWeekdayLabelsForAdditionalCity(weatherDailyForecasts);
+            setForecastTemperatureLabelsInAdditionalCity(weatherDailyForecasts);
+            setWeatherImagesForAdditionalCity(weatherDailyForecasts);
+        }
+    }
 
+    private void setWeatherImagesForAdditionalCity(List<DailyForecast> weatherDailyForecasts) {
+
+    }
+
+
+    private void setWeatherImagesForDefaultCity(List<DailyForecast> weatherDailyForecasts) {
+        int dayNumber = 0;
+
+        weatherImageD1.setImage(getWeatherPictureForDay(dayNumber++, weatherDailyForecasts));
+        weatherImageD2.setImage(getWeatherPictureForDay(dayNumber++, weatherDailyForecasts));
+        weatherImageD3.setImage(getWeatherPictureForDay(dayNumber++, weatherDailyForecasts));
+        weatherImageD4.setImage(getWeatherPictureForDay(dayNumber++, weatherDailyForecasts));
+        weatherImageD5.setImage(getWeatherPictureForDay(dayNumber++, weatherDailyForecasts));
+
+    }
+
+    private Image getWeatherPictureForDay(int dayNumber, List<DailyForecast> weatherDailyForecasts) {
+        Image weatherPicture = new Image("/default.png");
+
+        if(weatherDailyForecasts.get(dayNumber).isSnow()) {
+            weatherPicture = new Image("/snow.png");
+        } else if (weatherDailyForecasts.get(dayNumber).isRain()) {
+            weatherPicture = new Image("/rain.png");
+        }
+
+        return weatherPicture;
+    }
+
+
+    private void setWeekdayLabelsForAdditionalCity(List<DailyForecast> weatherDailyForecasts) {
+        int dayNumber = 0;
+        City additionalCity= weatherAppManager.getCityByType(CityType.ADDITIONAL);
+//        dayOfWeekLabelA1.setText(dateManager.convertTimeToDayOfWeek(weatherDailyForecasts.get(dayNumber++).getTime(),
+//                additionalCity.getCountryCode()));
+//        dayOfWeekLabelA2.setText(dateManager.convertTimeToDayOfWeek(weatherDailyForecasts.get(dayNumber++).getTime(),
+//                additionalCity.getCountryCode()));
+//        dayOfWeekLabelA3.setText(dateManager.convertTimeToDayOfWeek(weatherDailyForecasts.get(dayNumber++).getTime(),
+//                additionalCity.getCountryCode()));
+//        dayOfWeekLabelA4.setText(dateManager.convertTimeToDayOfWeek(weatherDailyForecasts.get(dayNumber++).getTime(),
+//                additionalCity.getCountryCode()));
+//        dayOfWeekLabelA5.setText(dateManager.convertTimeToDayOfWeek(weatherDailyForecasts.get(dayNumber++).getTime(),
+//                additionalCity.getCountryCode()));
+    }
+
+    private void setWeekdayLabelsForDefaultCity(List<DailyForecast> weatherDailyForecasts) {
+        int dayNumber = 0;
+        City defaultCity= weatherAppManager.getCityByType(CityType.DEFAULT);
+
+        dayOfWeekLabelD1.setText(dateManager.convertTimeToDayOfWeek(weatherDailyForecasts.get(dayNumber++).getTime(),
+                defaultCity.getCountryCode()));
+        dayOfWeekLabelD2.setText(dateManager.convertTimeToDayOfWeek(weatherDailyForecasts.get(dayNumber++).getTime(),
+                defaultCity.getCountryCode()));
+        dayOfWeekLabelD3.setText(dateManager.convertTimeToDayOfWeek(weatherDailyForecasts.get(dayNumber++).getTime(),
+                defaultCity.getCountryCode()));
+        dayOfWeekLabelD4.setText(dateManager.convertTimeToDayOfWeek(weatherDailyForecasts.get(dayNumber++).getTime(),
+                defaultCity.getCountryCode()));
+        dayOfWeekLabelD5.setText(dateManager.convertTimeToDayOfWeek(weatherDailyForecasts.get(dayNumber++).getTime(),
+                defaultCity.getCountryCode()));
+    }
+
+
+    private void setForecastTemperatureLabelsInAdditionalCity(List<DailyForecast> weatherDailyForecasts) {
+        int dayNumber = 0;
+//        temperatureLabelA1.setText(String.valueOf(Math.round(weatherDailyForecasts.get(dayNumber++).getTemperature())) +
+//                " °C");
+//        temperatureLabelA2.setText(String.valueOf(Math.round(weatherDailyForecasts.get(dayNumber++).getTemperature())) +
+//                " °C");
+//        temperatureLabelA3.setText(String.valueOf(Math.round(weatherDailyForecasts.get(dayNumber++).getTemperature())) +
+//                " °C");
+//        temperatureLabelA4.setText(String.valueOf(Math.round(weatherDailyForecasts.get(dayNumber++).getTemperature())) +
+//                " °C");
+//        temperatureLabelA5.setText(String.valueOf(Math.round(weatherDailyForecasts.get(dayNumber++).getTemperature())) +
+//                " °C");
+    }
+
+    private void setForecastTemperatureLabelsInDefaultCity(List<DailyForecast> weatherDailyForecasts) {
+        int dayNumber = 0;
+        temperatureLabelD1.setText(String.valueOf(Math.round(weatherDailyForecasts.get(dayNumber++).getTemperature())) +
+                " °C");
+        temperatureLabelD2.setText(String.valueOf(Math.round(weatherDailyForecasts.get(dayNumber++).getTemperature())) +
+                " °C");
+        temperatureLabelD3.setText(String.valueOf(Math.round(weatherDailyForecasts.get(dayNumber++).getTemperature())) +
+                " °C");
+        temperatureLabelD4.setText(String.valueOf(Math.round(weatherDailyForecasts.get(dayNumber++).getTemperature())) +
+                " °C");
+        temperatureLabelD5.setText(String.valueOf(Math.round(weatherDailyForecasts.get(dayNumber++).getTemperature())) +
+                " °C");
     }
 
     private void setTodayCityData(CityType cityType) {

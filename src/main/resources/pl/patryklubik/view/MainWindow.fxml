@@ -6,13 +6,12 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="503.0" prefWidth="510.0" styleClass="container" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="anch" prefHeight="619.0" prefWidth="600.0" styleClass="container" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <MenuBar prefHeight="29.0" prefWidth="1060.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <menus>
@@ -29,18 +28,77 @@
                 </Menu>
             </menus>
         </MenuBar>
-      <VBox layoutX="-3.0" layoutY="327.0" prefHeight="178.0" prefWidth="238.0">
+      <VBox fx:id="myVBox" layoutX="20.0" layoutY="310.0" prefHeight="178.0" prefWidth="238.0">
          <children>
             <HBox prefHeight="58.0" prefWidth="238.0" styleClass="next_day">
                <children>
-                  <Label prefHeight="58.0" prefWidth="95.0" text="Poniedziałek">
+                  <Label fx:id="dayOfWeekLabelD1" prefHeight="58.0" prefWidth="95.0" text="Poniedziałek">
                      <HBox.margin>
                         <Insets left="15.0" />
                      </HBox.margin>
                   </Label>
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <Label alignment="CENTER" prefHeight="58.0" prefWidth="50.0" text="15C" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
-                  <ImageView fitHeight="58.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label fx:id="temperatureLabelD1" alignment="CENTER" prefHeight="58.0" prefWidth="50.0" text="15C"
+                         textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
+                  <ImageView fx:id="weatherImageD1" fitHeight="58.0" fitWidth="74.0" pickOnBounds="true"
+                             preserveRatio="true" />
+               </children>
+            </HBox>
+            <HBox prefHeight="58.0" prefWidth="238.0" styleClass="next_day">
+               <children>
+                  <Label fx:id="dayOfWeekLabelD2" prefHeight="58.0" prefWidth="95.0" text="Poniedziałek">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
+                  <Label fx:id="temperatureLabelD2" alignment="CENTER" prefHeight="58.0" prefWidth="50.0" text="15C"
+                         textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
+                  <ImageView fx:id="weatherImageD2" fitHeight="58.0" fitWidth="74.0" pickOnBounds="true"
+                             preserveRatio="true" />
+               </children>
+            </HBox>
+            <HBox prefHeight="58.0" prefWidth="238.0" styleClass="next_day">
+               <children>
+                  <Label fx:id="dayOfWeekLabelD3" prefHeight="58.0" prefWidth="95.0" text="Poniedziałek">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
+                  <Label fx:id="temperatureLabelD3" alignment="CENTER" prefHeight="58.0" prefWidth="50.0" text="15C"
+                         textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
+                  <ImageView fx:id="weatherImageD3" fitHeight="58.0" fitWidth="74.0" pickOnBounds="true"
+                             preserveRatio="true" />
+               </children>
+            </HBox>
+            <HBox prefHeight="58.0" prefWidth="238.0" styleClass="next_day">
+               <children>
+                  <Label fx:id="dayOfWeekLabelD4" prefHeight="58.0" prefWidth="95.0" text="Poniedziałek">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
+                  <Label fx:id="temperatureLabelD4" alignment="CENTER" prefHeight="58.0" prefWidth="50.0" text="15C"
+                         textAlignment="CENTER"
+                          textOverrun="CENTER_ELLIPSIS" />
+                  <ImageView fx:id="weatherImageD4" fitHeight="58.0" fitWidth="74.0" pickOnBounds="true"
+                             preserveRatio="true" />
+               </children>
+            </HBox>
+            <HBox prefHeight="58.0" prefWidth="238.0" styleClass="next_day">
+               <children>
+                  <Label fx:id="dayOfWeekLabelD5" prefHeight="58.0" prefWidth="95.0" text="Poniedziałek">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
+                  <Label fx:id="temperatureLabelD5" alignment="CENTER" prefHeight="58.0" prefWidth="50.0" text="15C"
+                         textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
+                  <ImageView fx:id="weatherImageD5" fitHeight="58.0" fitWidth="74.0" pickOnBounds="true"
+                             preserveRatio="true" />
                </children>
             </HBox>
          </children>
@@ -69,8 +127,7 @@
             <HBox prefHeight="99.0" prefWidth="214.0">
                <children>
                   <Label fx:id="defaultCityCurrentTemperature" prefHeight="88.0" prefWidth="86.0" text="25C" />
-                  <ImageView fx:id="defaultCityCurrentDayImage" fitHeight="86.0" fitWidth="127.0" pickOnBounds="true"
-                             preserveRatio="true" />
+                  <ImageView fx:id="defaultCityCurrentDayImage" fitHeight="86.0" fitWidth="127.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </HBox>
             <HBox prefHeight="38.0" prefWidth="146.0">
