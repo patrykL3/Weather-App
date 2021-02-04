@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import pl.patryklubik.model.CityType;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,7 +40,22 @@ public class ViewFactory {
     public void showMainWindow(){
 
         BaseController controller = new MainWindowController(weatherAppManager,this, "MainWindow.fxml");
+//        controller.init();
         initializeStage(controller,false);
+    }
+
+    public void showCitySelectionWindow(CityType cityType){
+
+        BaseController controller = new CitySelectionWindowController(weatherAppManager, this, "CitySelectionWindow" +
+                ".fxml", cityType);
+
+        initializeStage(controller,false);
+    }
+
+    public void closeAllStages() {
+        for (Stage stage: activeStages) {
+            stage.close();
+        }
     }
 
     private void initializeStage(BaseController baseController, boolean resizable) {

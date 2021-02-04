@@ -11,7 +11,7 @@ public class City {
     String cityName;
     CityType cityType;
     Weather currentDayWeather;
-    HourlyForecast weatherForecast;
+//    HourlyForecast weatherForecast;
     FewDaysForecast weatherFewDaysForecast;
 
 
@@ -56,8 +56,8 @@ public class City {
         this.currentDayWeather = currentDayWeather;
     }
 
-    public void setWeatherHourlyForecast(HourlyForecast weatherForecast) {
-        this.weatherForecast = weatherForecast;
-    }
+//    public void setWeatherHourlyForecast(HourlyForecast weatherForecast) {
+//        this.weatherForecast = weatherForecast;
+//    }
 
 }

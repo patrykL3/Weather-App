@@ -55,7 +55,7 @@ public class WeatherDataService extends Service<ResultDownloadWeatherData> {
 
             city.setCurrentDayWeather(this.getCurrentDayWeather());
 //            city.setWeatherForecast(this.getWeatherForecast());
-            city.setWeatherDailyForecast( new FewDaysForecast(this.getWeatherForecast()));
+            city.setWeatherDailyForecast( new FewDaysForecast(getWeatherForecast()));
 
         } catch (DataNotFoundException e) {
             e.printStackTrace();

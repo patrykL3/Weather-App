@@ -26,7 +26,7 @@ public class StarterWindowController extends BaseController {
 
     @FXML
     void DefaultCitySelectButtonAction() {
-        defaultCityField.setText("londyn");
+        defaultCityField.setText("Londyn");
         if (fieldAreValid()) {
         weatherDataService.setCityName(defaultCityField.getText());
         weatherDataService.restart();

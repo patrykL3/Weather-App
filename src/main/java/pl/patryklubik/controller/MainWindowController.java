@@ -123,7 +123,7 @@ public class MainWindowController extends BaseController implements Initializabl
 
     @FXML
     void setHomeLocationAction(ActionEvent event) {
-
+        viewFactory.showCitySelectionWindow(CityType.DEFAULT);
     }
 
     @FXML
@@ -159,6 +159,7 @@ public class MainWindowController extends BaseController implements Initializabl
             setWeekdayLabelsForDefaultCity(weatherDailyForecasts);
             setForecastTemperatureLabelsInDefaultCity(weatherDailyForecasts);
             setWeatherImagesForDefaultCity(weatherDailyForecasts);
+        } else if(cityType == CityType.ADDITIONAL) {
         } else if(cityType == CityType.ADDITIONAL) {
             setWeekdayLabelsForAdditionalCity(weatherDailyForecasts);
             setForecastTemperatureLabelsInAdditionalCity(weatherDailyForecasts);
