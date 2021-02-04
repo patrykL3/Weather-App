@@ -68,7 +68,7 @@ public class CitySelectionWindowController extends BaseController implements Ini
         super(weatherAppManager, viewFactory, fxmlName);
         this.cityType = cityType;
         this.weatherAppManager = weatherAppManager;
-        this.weatherDataService = new WeatherDataService(weatherAppManager, CityType.DEFAULT);
+        this.weatherDataService = new WeatherDataService(weatherAppManager, cityType);
     }
 
     @Override
