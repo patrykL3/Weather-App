@@ -22,6 +22,7 @@ import pl.patryklubik.model.DailyForecast;
 import pl.patryklubik.model.FewDaysForecast;
 import pl.patryklubik.view.ViewFactory;
 
+import java.net.URI;
 import java.net.URL;
 import java.util.*;
 
@@ -145,13 +146,14 @@ public class MainWindowController extends BaseController implements Initializabl
 
     @FXML
     void openInfoPageAction(ActionEvent event) {
-
+        try {
+            URI uri= new URI("https://patryklubik.pl/weather-app/");
+            java.awt.Desktop.getDesktop().browse(uri);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    @FXML
-    void optionsAction(ActionEvent event) {
-
-    }
 
     @FXML
     void setHomeLocationAction(ActionEvent event) {

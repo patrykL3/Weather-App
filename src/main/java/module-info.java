@@ -8,6 +8,7 @@ module WeatherApp {
     requires openweathermap.api;
     requires java.sql;
     requires com.ibm.icu;
+    requires java.desktop;
 
     opens pl.patryklubik;
     opens pl.patryklubik.view;
