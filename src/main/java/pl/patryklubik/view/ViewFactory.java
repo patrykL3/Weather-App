@@ -40,7 +40,6 @@ public class ViewFactory {
     public void showMainWindow(){
 
         BaseController controller = new MainWindowController(weatherAppManager,this, "MainWindow.fxml");
-//        controller.init();
         initializeStage(controller,false);
     }
 

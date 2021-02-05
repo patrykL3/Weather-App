@@ -181,7 +181,8 @@
             <HBox prefHeight="99.0" prefWidth="214.0">
                <children>
                   <Label fx:id="additionalCityCurrentTemperature" prefHeight="88.0" prefWidth="86.0" text="25C" />
-                  <ImageView fitHeight="86.0" fitWidth="127.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="additionalCityCurrentDayImage" fitHeight="86.0" fitWidth="127.0"
+                             pickOnBounds="true" preserveRatio="true" />
                </children>
             </HBox>
             <HBox prefHeight="38.0" prefWidth="146.0">

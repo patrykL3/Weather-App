@@ -1,6 +1,7 @@
 package pl.patryklubik.controller.services;
 
 import com.github.prominence.openweathermap.api.HourlyForecastRequester;
+import com.github.prominence.openweathermap.api.OpenWeatherMapManager;
 import com.github.prominence.openweathermap.api.WeatherRequester;
 import com.github.prominence.openweathermap.api.constants.Accuracy;
 import com.github.prominence.openweathermap.api.constants.Unit;
@@ -23,14 +24,16 @@ import pl.patryklubik.model.FewDaysForecast;
 
 public class WeatherDataService extends Service<ResultDownloadWeatherData> {
 
-    private WeatherAppManager weatherAppManager;
+//    private WeatherAppManager weatherAppManager;
+private final OpenWeatherMapManager openWeatherManager;
     private City city;
     private final String unit = Unit.METRIC_SYSTEM;
     private final String accuracy = Accuracy.ACCURATE;
 
 
     public WeatherDataService(WeatherAppManager weatherAppManager, CityType cityType) {
-        this.weatherAppManager = weatherAppManager;
+//        this.weatherAppManager = weatherAppManager;
+        openWeatherManager = new OpenWeatherMapManager(Config.getToken());
         this.city = weatherAppManager.getCityByType(cityType);
     }
 
@@ -70,7 +73,8 @@ public class WeatherDataService extends Service<ResultDownloadWeatherData> {
     }
 
     private HourlyForecast getWeatherForecast() {
-        HourlyForecastRequester forecastRequester = weatherAppManager.getHourlyForecastRequester();
+//        HourlyForecastRequester forecastRequester = weatherAppManager.getHourlyForecastRequester();
+        HourlyForecastRequester forecastRequester = openWeatherManager.getHourlyForecastRequester();
         HourlyForecast forecastResponse = forecastRequester
                 .setLanguage(Config.getAppLanguage())
                 .setUnitSystem(unit)
@@ -81,7 +85,8 @@ public class WeatherDataService extends Service<ResultDownloadWeatherData> {
     }
 
     private Weather getCurrentDayWeather(){
-        WeatherRequester weatherRequester = weatherAppManager.getWeatherRequester();
+//        WeatherRequester weatherRequester = weatherAppManager.getWeatherRequester();
+        WeatherRequester weatherRequester = openWeatherManager.getWeatherRequester();
 
         Weather weatherResponse = weatherRequester
                 .setLanguage(Config.getAppLanguage())

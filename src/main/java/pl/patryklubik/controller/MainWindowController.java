@@ -78,6 +78,9 @@ public class MainWindowController extends BaseController implements Initializabl
     private ImageView defaultCityCurrentDayImage;
 
     @FXML
+    private ImageView additionalCityCurrentDayImage;
+
+    @FXML
     private Label dayOfWeekLabelD1;
     @FXML
     private Label dayOfWeekLabelD2;
@@ -304,10 +307,10 @@ public class MainWindowController extends BaseController implements Initializabl
             fillAdditionalsTodaysLabels(todayWeather);
         }
 
-        setCurrentWeatherPicture(todayWeather);
+        setCurrentWeatherPicture(todayWeather, cityType);
     }
 
-    private void setCurrentWeatherPicture(Weather todayWeather) {
+    private void setCurrentWeatherPicture(Weather todayWeather, CityType cityType) {
         Image weatherPicture = new Image("/default.png");
 
         if(isItSnowingNow(todayWeather)) {
@@ -316,7 +319,12 @@ public class MainWindowController extends BaseController implements Initializabl
             weatherPicture = new Image("/rain.png");
         }
 
-        defaultCityCurrentDayImage.setImage(weatherPicture);
+        if (cityType == CityType.DEFAULT) {
+            defaultCityCurrentDayImage.setImage(weatherPicture);
+        } else if (cityType == CityType.ADDITIONAL) {
+            additionalCityCurrentDayImage.setImage(weatherPicture);
+        }
+
     }
 
     private boolean isItSnowingNow(Weather todayWeather) {
