@@ -18,6 +18,7 @@ public class Launcher extends Application {
 
         @Override
     public void stop() throws Exception {
+        programState.saveData();
 
     }
 

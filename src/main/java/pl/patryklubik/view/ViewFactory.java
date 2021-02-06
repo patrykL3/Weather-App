@@ -1,13 +1,14 @@
 package pl.patryklubik.view;
 
 
+import pl.patryklubik.WeatherAppManager;
 import pl.patryklubik.controller.*;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import pl.patryklubik.model.CityType;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,23 +21,40 @@ public class ViewFactory {
 
     private final String STYLESHEET_PATH = "pl/patryklubik/view/Stylesheet.css";
     private final String MAIN_ICON_PATH = "pl/patryklubik/view/mainIcon.png";
+    private WeatherAppManager weatherAppManager;
 
     private ArrayList<Stage> activeStages;
 
-    public ViewFactory() {
+    public ViewFactory(WeatherAppManager weatherAppManager) {
+
+        this.weatherAppManager = weatherAppManager;
         activeStages = new ArrayList<Stage>();
     }
 
     public void showStarterWindow(){
 
-        BaseController controller = new StarterWindowController(this, "StarterWindow.fxml");
+        BaseController controller = new StarterWindowController(weatherAppManager, this, "StarterWindow.fxml");
         initializeStage(controller,false);
     }
 
     public void showMainWindow(){
 
-        BaseController controller = new MainWindowController(this, "MainWindow.fxml");
+        BaseController controller = new MainWindowController(weatherAppManager,this, "MainWindow.fxml");
         initializeStage(controller,false);
+    }
+
+    public void showCitySelectionWindow(CityType cityType){
+
+        BaseController controller = new CitySelectionWindowController(weatherAppManager, this, "CitySelectionWindow" +
+                ".fxml", cityType);
+
+        initializeStage(controller,false);
+    }
+
+    public void closeAllStages() {
+        for (Stage stage: activeStages) {
+            stage.close();
+        }
     }
 
     private void initializeStage(BaseController baseController, boolean resizable) {
@@ -73,5 +91,9 @@ public class ViewFactory {
     public  void closeStage(Stage stageToClose){
         stageToClose.close();
         activeStages.remove(stageToClose);
+    }
+
+    public boolean isMainViewInitialized() {
+        return false;
     }
 }

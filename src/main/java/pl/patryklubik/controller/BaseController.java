@@ -1,5 +1,6 @@
 package pl.patryklubik.controller;
 
+import pl.patryklubik.WeatherAppManager;
 import pl.patryklubik.view.ViewFactory;
 
 /**
@@ -10,8 +11,10 @@ public abstract class BaseController {
 
     protected ViewFactory viewFactory;
     private String fxmlName;
+    private WeatherAppManager weatherAppManager;
 
-    public BaseController(ViewFactory viewFactory, String fxmlName) {
+    public BaseController(WeatherAppManager weatherAppManager, ViewFactory viewFactory, String fxmlName) {
+        this.weatherAppManager = weatherAppManager;
         this.viewFactory = viewFactory;
         this.fxmlName = fxmlName;
     }
