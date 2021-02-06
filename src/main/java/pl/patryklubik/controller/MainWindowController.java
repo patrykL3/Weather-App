@@ -36,10 +36,13 @@ public class MainWindowController extends BaseController implements Initializabl
     private DateManager dateManager;
 
     @FXML
-    private VBox myVBox;
+    private Button addSecondLocationButton;
 
     @FXML
-    private AnchorPane anch;
+    private VBox weatherForecastForAdditionalCityVBox;
+
+    @FXML
+    private VBox todayWeatherForAdditionalCityVBox;
 
     @FXML
     private Label currentDayOfWeekLabel;
@@ -182,11 +185,17 @@ public class MainWindowController extends BaseController implements Initializabl
         setTodayCityData(CityType.DEFAULT);
         setWeatherDailyForecasts(CityType.DEFAULT);
 
+
+
         if(weatherAppManager.getCityByType(CityType.ADDITIONAL).getCityName() != null) {
             setTodayCityData(CityType.ADDITIONAL);
             setWeatherDailyForecasts(CityType.ADDITIONAL);
+            weatherForecastForAdditionalCityVBox.setVisible(true);
+            todayWeatherForAdditionalCityVBox.setVisible(true);
+            addSecondLocationButton.setVisible(false);
         }
     }
+
 
     private void setWeatherDailyForecasts(CityType cityType) {
         FewDaysForecast fewDaysForecast = weatherAppManager.getCityByType(cityType).getWeatherFewDaysForecast();
