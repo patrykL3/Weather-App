@@ -1,9 +1,10 @@
 package pl.patryklubik.model;
 
+import pl.patryklubik.DateManager;
+
 import com.github.prominence.openweathermap.api.model.Rain;
 import com.github.prominence.openweathermap.api.model.Snow;
 import com.github.prominence.openweathermap.api.model.response.HourlyForecast;
-import pl.patryklubik.DateManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +15,8 @@ import java.util.List;
 
 public class FewDaysForecast {
 
-    HourlyForecast fullWeatherForecast;
-    DateManager dateManager = new DateManager();
+    private HourlyForecast fullWeatherForecast;
+    private DateManager dateManager = new DateManager();
 
     public FewDaysForecast(HourlyForecast fullWeatherForecast) {
         this.fullWeatherForecast = fullWeatherForecast;
@@ -128,5 +129,4 @@ public class FewDaysForecast {
 
         return startPoint;
     }
-
 }

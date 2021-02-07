@@ -16,12 +16,12 @@ public class ProgramState {
 
     private ViewFactory viewFactory;
     private ApplicationData applicationData;
-    private WeatherAppManager weatherAppManager;
+    private CitiesManager citiesManager;
 
     public ProgramState() {
-        weatherAppManager = new WeatherAppManager();
-        applicationData = new ApplicationData(weatherAppManager);
-        viewFactory = new ViewFactory(weatherAppManager);
+        citiesManager = new CitiesManager();
+        applicationData = new ApplicationData(citiesManager);
+        viewFactory = new ViewFactory(citiesManager);
     }
 
 
@@ -36,13 +36,12 @@ public class ProgramState {
         applicationData.loadData();
 
         if (applicationData.cityExist(CityType.DEFAULT)) {
-
             savedDefaultCityName = applicationData.getCityName(CityType.DEFAULT);
-            weatherAppManager.getCityByType(CityType.DEFAULT).setCityName(savedDefaultCityName);
+            citiesManager.getCityByType(CityType.DEFAULT).setCityName(savedDefaultCityName);
 
             if(applicationData.cityExist(CityType.ADDITIONAL)) {
                 savedAdditionalCityName = applicationData.getCityName(CityType.ADDITIONAL);
-                weatherAppManager.getCityByType(CityType.ADDITIONAL).setCityName(savedAdditionalCityName);
+                citiesManager.getCityByType(CityType.ADDITIONAL).setCityName(savedAdditionalCityName);
             }
             viewFactory.showMainWindow();
 
@@ -52,10 +51,7 @@ public class ProgramState {
     }
 
     public void saveData() {
-        List<City> cities = weatherAppManager.getCities();
+        List<City> cities = citiesManager.getCities();
         applicationData.saveData(cities);
     }
-
-
-
 }

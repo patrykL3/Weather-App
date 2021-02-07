@@ -1,12 +1,9 @@
 package pl.patryklubik.model;
 
-import javafx.collections.ObservableList;
-import pl.patryklubik.WeatherAppManager;
-import pl.patryklubik.controller.ResultDownloadWeatherData;
+import pl.patryklubik.CitiesManager;
 import pl.patryklubik.controller.services.WeatherDataService;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,13 +13,12 @@ import java.util.List;
 public class ApplicationData {
 
     private final String DATA_LOCATION = System.getProperty("user.home") + File.separator + "weatherAppData.ser";
-    private WeatherAppManager weatherAppManager;
-
+    private CitiesManager citiesManager;
     private HashMap<CityType,String> dataMap = new HashMap<CityType,String>();
 
 
-    public ApplicationData(WeatherAppManager weatherAppManager) {
-        this.weatherAppManager = weatherAppManager;
+    public ApplicationData(CitiesManager citiesManager) {
+        this.citiesManager = citiesManager;
     }
 
     public void loadData() {
@@ -33,18 +29,11 @@ public class ApplicationData {
             if(fileWithData.exists()) {
                 FileInputStream fileInputStream = new FileInputStream(DATA_LOCATION);
                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-
-                HashMap<CityType,String>  cities = (HashMap<CityType,String> ) objectInputStream.readObject();
+                HashMap<CityType,String>  cities = (HashMap<CityType,String>) objectInputStream.readObject();
                 dataMap = cities;
 
-                WeatherDataService weatherDataService = new WeatherDataService(weatherAppManager, CityType.DEFAULT);
-                weatherDataService.setCityName(cities.get(CityType.DEFAULT));
-                weatherDataService.restart();
-
-                WeatherDataService weatherDataServiceA = new WeatherDataService(weatherAppManager, CityType.ADDITIONAL);
-                weatherDataServiceA.setCityName(cities.get(CityType.ADDITIONAL));
-                weatherDataServiceA.restart();
-
+                loadCityData(cities, CityType.DEFAULT);
+                loadCityData(cities, CityType.ADDITIONAL);
             }
 
         } catch ( Exception e){
@@ -53,12 +42,16 @@ public class ApplicationData {
 
     }
 
-
-
+    private void loadCityData(HashMap<CityType,String>  cities, CityType cityType) {
+        WeatherDataService weatherDataService = new WeatherDataService(citiesManager, cityType);
+        weatherDataService.setCityName(cities.get(cityType));
+        weatherDataService.restart();
+    }
 
     public void saveData(List<City> cities){
 
         try {
+            File file = new File(DATA_LOCATION);
 
             for (City city : cities) {
                 if(city.getCityType() == CityType.ADDITIONAL && city.getCityName() != null && city.getCityName() != "") {
@@ -68,7 +61,6 @@ public class ApplicationData {
                 }
             }
 
-            File file = new File(DATA_LOCATION);
             if(!(dataMap.get(CityType.DEFAULT).isEmpty())) {
                 FileOutputStream fileOutputStream = new FileOutputStream(file);
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -84,6 +76,7 @@ public class ApplicationData {
     }
 
     public boolean cityExist(CityType cityType) {
+
         if (dataMap.get(cityType) != null && dataMap.get(cityType) != "") {
             return true;
         }

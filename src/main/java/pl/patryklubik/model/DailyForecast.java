@@ -5,10 +5,11 @@ package pl.patryklubik.model;
  */
 
 public class DailyForecast {
-    float temperature;
-    long time;
-    boolean snow;
-    boolean rain;
+
+    private float temperature;
+    private long time;
+    private boolean snow;
+    private boolean rain;
 
     public DailyForecast(float temperature, long time, boolean snow, boolean rain) {
         this.temperature = temperature;
@@ -21,32 +22,16 @@ public class DailyForecast {
         return temperature;
     }
 
-    public void setTemperature(int temperature) {
-        this.temperature = temperature;
-    }
-
     public long getTime() {
         return time;
-    }
-
-    public void setTime(long time) {
-        this.time = time;
     }
 
     public boolean isSnow() {
         return snow;
     }
 
-    public void setSnow(boolean snow) {
-        this.snow = snow;
-    }
-
     public boolean isRain() {
         return rain;
-    }
-
-    public void setRain(boolean rain) {
-        this.rain = rain;
     }
 
     @Override
