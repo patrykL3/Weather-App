@@ -251,15 +251,15 @@ public class MainWindowController extends BaseController implements Initializabl
         int dayNumber = 0;
         City additionalCity= weatherAppManager.getCityByType(CityType.ADDITIONAL);
         dayOfWeekLabelA1.setText(dateManager.convertTimeToDayOfWeek(weatherDailyForecasts.get(dayNumber++).getTime(),
-                additionalCity.getCountryCode()));
+                additionalCity.getCountryCode()).toUpperCase());
         dayOfWeekLabelA2.setText(dateManager.convertTimeToDayOfWeek(weatherDailyForecasts.get(dayNumber++).getTime(),
-                additionalCity.getCountryCode()));
+                additionalCity.getCountryCode()).toUpperCase());
         dayOfWeekLabelA3.setText(dateManager.convertTimeToDayOfWeek(weatherDailyForecasts.get(dayNumber++).getTime(),
-                additionalCity.getCountryCode()));
+                additionalCity.getCountryCode()).toUpperCase());
         dayOfWeekLabelA4.setText(dateManager.convertTimeToDayOfWeek(weatherDailyForecasts.get(dayNumber++).getTime(),
-                additionalCity.getCountryCode()));
+                additionalCity.getCountryCode()).toUpperCase());
         dayOfWeekLabelA5.setText(dateManager.convertTimeToDayOfWeek(weatherDailyForecasts.get(dayNumber++).getTime(),
-                additionalCity.getCountryCode()));
+                additionalCity.getCountryCode()).toUpperCase());
     }
 
     private void setWeekdayLabelsForDefaultCity(List<DailyForecast> weatherDailyForecasts) {
@@ -267,15 +267,15 @@ public class MainWindowController extends BaseController implements Initializabl
         City defaultCity= weatherAppManager.getCityByType(CityType.DEFAULT);
 
         dayOfWeekLabelD1.setText(dateManager.convertTimeToDayOfWeek(weatherDailyForecasts.get(dayNumber++).getTime(),
-                defaultCity.getCountryCode()));
+                defaultCity.getCountryCode()).toUpperCase());
         dayOfWeekLabelD2.setText(dateManager.convertTimeToDayOfWeek(weatherDailyForecasts.get(dayNumber++).getTime(),
-                defaultCity.getCountryCode()));
+                defaultCity.getCountryCode()).toUpperCase());
         dayOfWeekLabelD3.setText(dateManager.convertTimeToDayOfWeek(weatherDailyForecasts.get(dayNumber++).getTime(),
-                defaultCity.getCountryCode()));
+                defaultCity.getCountryCode()).toUpperCase());
         dayOfWeekLabelD4.setText(dateManager.convertTimeToDayOfWeek(weatherDailyForecasts.get(dayNumber++).getTime(),
-                defaultCity.getCountryCode()));
+                defaultCity.getCountryCode()).toUpperCase());
         dayOfWeekLabelD5.setText(dateManager.convertTimeToDayOfWeek(weatherDailyForecasts.get(dayNumber++).getTime(),
-                defaultCity.getCountryCode()));
+                defaultCity.getCountryCode()).toUpperCase());
     }
 
 
@@ -297,6 +297,7 @@ public class MainWindowController extends BaseController implements Initializabl
         int dayNumber = 0;
         temperatureLabelD1.setText(String.valueOf(Math.round(weatherDailyForecasts.get(dayNumber++).getTemperature())) +
                 " °C");
+//        temperatureLabelD1.setText("-99 °C");
         temperatureLabelD2.setText(String.valueOf(Math.round(weatherDailyForecasts.get(dayNumber++).getTemperature())) +
                 " °C");
         temperatureLabelD3.setText(String.valueOf(Math.round(weatherDailyForecasts.get(dayNumber++).getTemperature())) +
@@ -360,10 +361,10 @@ public class MainWindowController extends BaseController implements Initializabl
 
 
     private void fillAdditionalsTodaysLabels(Weather todayWeather) {
-        additionalCityName.setText(weatherAppManager.getCityByType(CityType.ADDITIONAL).getCityName());
+        additionalCityName.setText(weatherAppManager.getCityByType(CityType.ADDITIONAL).getCityName().toUpperCase());
         additionalCityPressure.setText("Ciśnienie: " + String.valueOf(todayWeather.getPressure()) + " hPa");
         additionalCityHumidity.setText("Wilgotność: " + String.valueOf(todayWeather.getHumidityPercentage()) + "%");
-        additionalCityCurrentTemperature.setText(todayWeather.getTemperature() + " °C");
+        additionalCityCurrentTemperature.setText(Math.round(todayWeather.getTemperature()) + " °C");
     }
 
     private void setHeaderTimeData() {
@@ -371,17 +372,21 @@ public class MainWindowController extends BaseController implements Initializabl
         long time = todayWeather.getDataCalculationDate().getTime();
         String countryCode = todayWeather.getCountry();
 
-        defaultCityDateLabel.setText(dateManager.convertTimeToDate(time, countryCode));
-        currentDayOfWeekLabel.setText(dateManager.convertTimeToDayOfWeek(time, countryCode));
+        defaultCityDateLabel.setText(dateManager.convertTimeToDayOfWeek(time, countryCode).toUpperCase() +
+                        "    " + dateManager.convertTimeToDate(time, countryCode));
         defaultCityTimeZone.setText("Strefa czasowa: " + dateManager.getTimeZoneName(countryCode));
 
     }
 
     private void fillDefaultTodaysLabels(Weather todayWeather) {
-        defaultCityName.setText(weatherAppManager.getCityByType(CityType.DEFAULT).getCityName());
+        defaultCityName.setText(weatherAppManager.getCityByType(CityType.DEFAULT).getCityName().toUpperCase());
         defaultCityPressure.setText("Ciśnienie: " + String.valueOf(todayWeather.getPressure()) + " hPa");
         defaultCityHumidity.setText("Wilgotność: " + String.valueOf(todayWeather.getHumidityPercentage()) + "%");
-        defaultCityCurrentTemperature.setText(todayWeather.getTemperature() + " °C");
+        defaultCityCurrentTemperature.setText(Math.round(todayWeather.getTemperature()) + " °C");
+
+
+
+//        defaultCityCurrentTemperature.setText("-99 °C");
 
 
     }

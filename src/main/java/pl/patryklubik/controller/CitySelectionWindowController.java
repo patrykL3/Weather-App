@@ -32,6 +32,9 @@ public class CitySelectionWindowController extends BaseController implements Ini
     private Label errorLabel;
 
     @FXML
+    private Label headerLabel;
+
+    @FXML
     void CancelButtonAction(ActionEvent event) {
         Stage thisStage = (Stage) errorLabel.getScene().getWindow();
         viewFactory.closeStage(thisStage);
@@ -56,9 +59,11 @@ public class CitySelectionWindowController extends BaseController implements Ini
                 return;
             case FAILED_BY_INVALID_CITY_NAME_ERROR:
                 errorLabel.setText("NIEPOPRAWNA NAZWA MIEJSCOWOŚCI");
+                errorLabel.setVisible(true);
                 return;
             case FAILED_BY_UNEXPECTED_ERROR:
                 errorLabel.setText("NIESPODZIEWANY BŁĄD");
+                errorLabel.setVisible(true);
                 return;
         }
     }
@@ -73,7 +78,17 @@ public class CitySelectionWindowController extends BaseController implements Ini
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        cityField.setText(weatherAppManager.getCityByType(cityType).getCityName());
-        cityField.setText("warszawa");
+        setHeaderLabel(cityType);
+        if(weatherAppManager.getCityByType(cityType).getCityName() != null) {
+            cityField.setText(weatherAppManager.getCityByType(cityType).getCityName());
+        }
+    }
+
+    private void setHeaderLabel(CityType cityType) {
+        if(cityType == CityType.DEFAULT) {
+            headerLabel.setText("Wprowadź nazwę Twojego miasta:");
+        } else if(cityType == CityType.ADDITIONAL) {
+            headerLabel.setText("Wprowadź nazwę dodatkowego miasta:");
+        }
     }
 }

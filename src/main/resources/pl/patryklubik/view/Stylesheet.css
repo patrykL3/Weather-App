@@ -1,21 +1,126 @@
-
+* {
+    -fx-my-background-color-1: #ff8000;
+    -fx-my-background-color-2: #e67300;
+    -fx-my-background-color-3: #ffa64d;
+    -fx-my-background-color-4: #cc6600;
+    -fx-my-border-color: #cc6600;
+    -fx-my-font-color: white;
+}
 
 .container {
-
+    -fx-font-family: "Calibri";
+    -fx-background-color: -fx-my-background-color-1;
+    -fx-background-color: linear-gradient(-fx-my-background-color-1 0%, -fx-my-background-color-2 100%);
 }
 
-.next_day {
-    //-fx-background-color: red;
-    -fx-border-color: red;
-    //fx-border: red;
+.header_font {
+    -fx-font-family: "Calisto MT";
 }
 
-.big{
-   -fx-font-size: 20px;
+Button, Label {
+    -fx-text-fill: -fx-my-font-color;
+}
+
+TextField {
+    -fx-focus-color: transparent;
+}
+
+Button {
+    -fx-background-color: -fx-my-background-color-4;
+}
+
+Button:hover {
+    -fx-background-color: -fx-my-background-color-3;
+}
+
+.menu-bar {
+    -fx-background-color: linear-gradient(-fx-my-background-color-1 0%, -fx-my-background-color-2 100%);
+}
+
+.menu-bar>.container>.menu-button>.label {
+    -fx-text-fill: -fx-my-font-color;
+}
+
+.menu-bar>.container>.menu-button:hover,
+.menu-bar>.container>.menu-button:focused,
+.menu-bar>.container>.menu-button:showing {
+    -fx-background-color: -fx-my-background-color-3;
+}
+
+.menu-bar>.container>.menu-button:hover>.label,
+.menu-bar>.container>.menu-button:focused>.label,
+.menu-bar>.container>.menu-button:showing>.label {
+    -fx-text-fill: -fx-my-font-color;
+}
+
+.menu-item {
+    -fx-background-color: -fx-my-background-color-2;
+}
+
+.menu-item .label {
+    -fx-text-fill: -fx-my-font-color;
+}
+
+.menu-item .label:disabled {
+    -fx-opacity: 1.0;
+}
+
+.menu-item:focused, .menu-item:hovered {
+    -fx-background-color: -fx-my-background-color-3;
+}
+
+.menu-item:focused .label, .menu-item:hovered .label {
+    -fx-text-fill: -fx-my-font-color;
+}
+
+.context-menu {
+    -fx-background-color: -fx-my-background-color-2;
+}
+
+.frame_border {
+    -fx-border-color: -fx-my-border-color;
+    -fx-border-radius: 5px;
+    -fx-border-width: 3;
+}
+
+.border-bottom {
+    -fx-border-style: hidden hidden solid hidden;
+    -fx-border-width: 3;
+    -fx-border-color: -fx-my-border-color;
+}
+
+.border-right {
+    -fx-border-style: hidden solid hidden hidden;
+    -fx-border-width: 3;
+    -fx-border-color: -fx-my-border-color;
+}
+
+.border-left {
+    -fx-border-style: hidden hidden hidden solid;
+    -fx-border-width: 3;
+    -fx-border-color: -fx-my-border-color;
+}
+
+.font-big-1 {
+    -fx-font-size: 18px;
+}
+
+.font-big-2 {
+    -fx-font-size: 24px;
+}
+
+.font-big-3 {
+    -fx-font-size: 45px;
+}
+
+.font-mid-5 {
+    -fx-font-size: 14px;
+}
+
+.font-mid-6 {
+    -fx-font-size: 15px;
 }
 
 .bold {
     -fx-font-weight: bold;
 }
-
-
