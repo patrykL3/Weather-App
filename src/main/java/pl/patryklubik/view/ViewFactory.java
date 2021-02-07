@@ -1,6 +1,7 @@
 package pl.patryklubik.view;
 
 
+import javafx.scene.image.Image;
 import pl.patryklubik.WeatherAppManager;
 import pl.patryklubik.controller.*;
 
@@ -72,7 +73,7 @@ public class ViewFactory {
         Stage stage = new Stage();
         stage.setScene(scene);
         scene.getStylesheets().add(STYLESHEET_PATH);
-//        stage.getIcons().add(new Image(MAIN_ICON_PATH));
+        stage.getIcons().add(new Image(MAIN_ICON_PATH));
         stage.setTitle(chooseWindowTitle(baseController.getFxmlName()));
         stage.show();
         stage.setResizable(resizable);

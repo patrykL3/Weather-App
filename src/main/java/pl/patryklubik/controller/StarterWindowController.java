@@ -26,7 +26,7 @@ public class StarterWindowController extends BaseController {
 
     @FXML
     void DefaultCitySelectButtonAction() {
-        defaultCityField.setText("Londyn");
+//        defaultCityField.setText("Londyn");
         if (fieldAreValid()) {
         weatherDataService.setCityName(defaultCityField.getText());
         weatherDataService.restart();
@@ -47,6 +47,7 @@ public class StarterWindowController extends BaseController {
 
         if(defaultCityField.getText().isEmpty()) {
             errorLabel.setText("WPROWADŹ NAZWĘ MIASTA");
+            errorLabel.setVisible(true);
             return false;
         }
 
@@ -64,9 +65,11 @@ public class StarterWindowController extends BaseController {
                 return;
             case FAILED_BY_INVALID_CITY_NAME_ERROR:
                 errorLabel.setText("NIEPOPRAWNA NAZWA MIEJSCOWOŚCI");
+                errorLabel.setVisible(true);
                 return;
             case FAILED_BY_UNEXPECTED_ERROR:
                 errorLabel.setText("NIESPODZIEWANY BŁĄD");
+                errorLabel.setVisible(true);
                 return;
         }
     }
