@@ -1,9 +1,7 @@
 package pl.patryklubik;
 
-import com.github.prominence.openweathermap.api.constants.Language;
 import pl.patryklubik.model.Config;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -13,17 +11,30 @@ import java.util.*;
 
 public class DateManager {
 
-
-    public String convertTimeToDate(long time, String countryCode) {
-        String currentDatePattern = "dd-MM-yyyy";
-
-        return getDateFromPattern(currentDatePattern, getTimeZone(countryCode), time);
-    }
-
     public String convertTimeToDayOfWeek(long time, String countryCode) {
         String dayOfWeekPattern = "EEEEEEE";
 
         return getDateFromPattern(dayOfWeekPattern, getTimeZone(countryCode), time);
+    }
+
+    public String getCurrentDayOfWeek(String countryCode) {
+        String dayOfWeekPattern = "EEEEEEE";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dayOfWeekPattern);
+        GregorianCalendar calendar = new GregorianCalendar();
+
+        simpleDateFormat.setTimeZone(getTimeZone(countryCode));
+
+        return simpleDateFormat.format(calendar.getTime());
+    }
+
+    public String getCurrentDate(String countryCode) {
+        String dayOfWeekPattern = "dd-MM-yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dayOfWeekPattern);
+        GregorianCalendar calendar = new GregorianCalendar();
+
+        simpleDateFormat.setTimeZone(getTimeZone(countryCode));
+
+        return simpleDateFormat.format(calendar.getTime());
     }
 
     public String getTimeZoneName(String countryCode) {
@@ -44,7 +55,6 @@ public class DateManager {
     }
 
     public String getCurrentDayNumberInCountry(String countryCode){
-
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd");
         GregorianCalendar calendar = new GregorianCalendar();
         simpleDateFormat.setTimeZone(getTimeZone(countryCode));
@@ -53,7 +63,6 @@ public class DateManager {
     }
 
     public String getDayNumberInCountry(String countryCode, long time){
-
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd");
         GregorianCalendar calendar = new GregorianCalendar();
         simpleDateFormat.setTimeZone(getTimeZone(countryCode));
@@ -68,5 +77,4 @@ public class DateManager {
 
         return countryTimeZone;
     }
-
 }

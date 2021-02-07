@@ -6,8 +6,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafx.stage.Window;
-import pl.patryklubik.WeatherAppManager;
+
+import pl.patryklubik.CitiesManager;
 import pl.patryklubik.controller.services.WeatherDataService;
 import pl.patryklubik.model.CityType;
 import pl.patryklubik.view.ViewFactory;
@@ -21,8 +21,8 @@ import java.util.ResourceBundle;
 public class CitySelectionWindowController extends BaseController implements Initializable {
 
     private WeatherDataService weatherDataService;
-    private CityType cityType;
-    private WeatherAppManager weatherAppManager;
+    private final CityType cityType;
+    private CitiesManager citiesManager;
 
 
     @FXML
@@ -51,6 +51,14 @@ public class CitySelectionWindowController extends BaseController implements Ini
         });
     }
 
+    public CitySelectionWindowController(CitiesManager citiesManager, ViewFactory viewFactory,
+                                         String fxmlName, CityType cityType) {
+        super(citiesManager, viewFactory, fxmlName);
+        this.cityType = cityType;
+        this.citiesManager = citiesManager;
+        this.weatherDataService = new WeatherDataService(citiesManager, cityType);
+    }
+
     private void reactToDownloadWeatherDataResult(ResultDownloadWeatherData resultDownloadWeatherData) {
         switch (resultDownloadWeatherData) {
             case SUCCESS:
@@ -68,19 +76,11 @@ public class CitySelectionWindowController extends BaseController implements Ini
         }
     }
 
-    public CitySelectionWindowController(WeatherAppManager weatherAppManager, ViewFactory viewFactory,
-                                         String fxmlName, CityType cityType) {
-        super(weatherAppManager, viewFactory, fxmlName);
-        this.cityType = cityType;
-        this.weatherAppManager = weatherAppManager;
-        this.weatherDataService = new WeatherDataService(weatherAppManager, cityType);
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setHeaderLabel(cityType);
-        if(weatherAppManager.getCityByType(cityType).getCityName() != null) {
-            cityField.setText(weatherAppManager.getCityByType(cityType).getCityName());
+        if(citiesManager.getCityByType(cityType).getCityName() != null) {
+            cityField.setText(citiesManager.getCityByType(cityType).getCityName());
         }
     }
 

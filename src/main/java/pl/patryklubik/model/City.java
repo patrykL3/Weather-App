@@ -1,31 +1,34 @@
 package pl.patryklubik.model;
 
-import com.github.prominence.openweathermap.api.model.response.HourlyForecast;
 import com.github.prominence.openweathermap.api.model.response.Weather;
 
 /**
  * Create by Patryk Łubik on 27.01.2021.
  */
+
 public class City {
 
-    String cityName;
-    CityType cityType;
-    Weather currentDayWeather;
-//    HourlyForecast weatherForecast;
-    FewDaysForecast weatherFewDaysForecast;
+    private String cityName;
+    private CityType cityType;
+    private FewDaysForecast weatherFewDaysForecast;
+    private CurrentWeather currentWeather;
 
 
+    public City(CityType cityType) {
+        this.cityType = cityType;
+    }
 
     public City(String cityName, CityType cityType) {
         this.cityName = cityName;
         this.cityType = cityType;
     }
-    public City(CityType cityType) {
-        this.cityType = cityType;
+
+    public CurrentWeather getCurrentWeather() {
+        return currentWeather;
     }
 
     public String getCountryCode() {
-        return currentDayWeather.getCountry();
+        return currentWeather.getCountry();
     }
 
     public String getCityName() {
@@ -34,10 +37,6 @@ public class City {
 
     public CityType getCityType() {
         return cityType;
-    }
-
-    public Weather getCurrentDayWeather() {
-        return currentDayWeather;
     }
 
     public FewDaysForecast getWeatherFewDaysForecast() {
@@ -52,12 +51,7 @@ public class City {
         this.cityName = cityName;
     }
 
-    public void setCurrentDayWeather(Weather currentDayWeather) {
-        this.currentDayWeather = currentDayWeather;
+    public void setCurrentWeather(Weather currentWeatherData) {
+        this.currentWeather = new CurrentWeather(currentWeatherData);
     }
-
-//    public void setWeatherHourlyForecast(HourlyForecast weatherForecast) {
-//        this.weatherForecast = weatherForecast;
-//    }
-
 }

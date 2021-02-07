@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 public class Launcher extends Application {
 
-    ProgramState programState = new ProgramState();
+    private final ProgramState programState = new ProgramState();
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -19,9 +19,7 @@ public class Launcher extends Application {
         @Override
     public void stop() throws Exception {
         programState.saveData();
-
     }
-
 
     public static void main(String[] args) {
         launch(args);

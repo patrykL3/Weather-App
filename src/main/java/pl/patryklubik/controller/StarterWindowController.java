@@ -1,7 +1,7 @@
 package pl.patryklubik.controller;
 
 
-import pl.patryklubik.WeatherAppManager;
+import pl.patryklubik.CitiesManager;
 import pl.patryklubik.controller.services.WeatherDataService;
 import pl.patryklubik.model.CityType;
 import pl.patryklubik.view.ViewFactory;
@@ -26,7 +26,6 @@ public class StarterWindowController extends BaseController {
 
     @FXML
     void DefaultCitySelectButtonAction() {
-//        defaultCityField.setText("Londyn");
         if (fieldAreValid()) {
         weatherDataService.setCityName(defaultCityField.getText());
         weatherDataService.restart();
@@ -38,9 +37,9 @@ public class StarterWindowController extends BaseController {
         }
     }
 
-    public StarterWindowController(WeatherAppManager weatherAppManager, ViewFactory viewFactory, String fxmlName) {
-        super(weatherAppManager, viewFactory, fxmlName);
-        this.weatherDataService = new WeatherDataService(weatherAppManager, CityType.DEFAULT);
+    public StarterWindowController(CitiesManager citiesManager, ViewFactory viewFactory, String fxmlName) {
+        super(citiesManager, viewFactory, fxmlName);
+        this.weatherDataService = new WeatherDataService(citiesManager, CityType.DEFAULT);
     }
 
     private boolean fieldAreValid() {
@@ -57,9 +56,7 @@ public class StarterWindowController extends BaseController {
     private void reactToDownloadWeatherDataResult(ResultDownloadWeatherData resultDownloadWeatherData) {
         switch (resultDownloadWeatherData) {
             case SUCCESS:
-                if(!viewFactory.isMainViewInitialized()){
-                    viewFactory.showMainWindow();
-                }
+                viewFactory.showMainWindow();
                 Stage stage = (Stage) errorLabel.getScene().getWindow();
                 viewFactory.closeStage(stage);
                 return;
