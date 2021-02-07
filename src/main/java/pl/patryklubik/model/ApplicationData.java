@@ -61,7 +61,7 @@ public class ApplicationData {
         try {
 
             for (City city : cities) {
-                if(city.getCityType() == CityType.ADDITIONAL && city.getCityName() != null) {
+                if(city.getCityType() == CityType.ADDITIONAL && city.getCityName() != null && city.getCityName() != "") {
                     dataMap.put(CityType.ADDITIONAL,city.getCityName());
                 } else if(city.getCityType() == CityType.DEFAULT) {
                     dataMap.put(CityType.DEFAULT,city.getCityName());
@@ -69,7 +69,7 @@ public class ApplicationData {
             }
 
             File file = new File(DATA_LOCATION);
-            if(!dataMap.get(CityType.DEFAULT).isEmpty()) {
+            if(!(dataMap.get(CityType.DEFAULT).isEmpty())) {
                 FileOutputStream fileOutputStream = new FileOutputStream(file);
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 

@@ -62,10 +62,12 @@ private final OpenWeatherMapManager openWeatherManager;
 
         } catch (DataNotFoundException e) {
             e.printStackTrace();
+            city.setCityName("");
             return  ResultDownloadWeatherData.FAILED_BY_INVALID_CITY_NAME_ERROR;
 
         } catch (Exception e) {
             e.printStackTrace();
+            city.setCityName("");
             return  ResultDownloadWeatherData.FAILED_BY_UNEXPECTED_ERROR;
         }
 
