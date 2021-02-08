@@ -75,8 +75,6 @@ public class MainWindowController extends BaseController implements Initializabl
     private Label dayOfWeekLabelD3;
     @FXML
     private Label dayOfWeekLabelD4;
-    @FXML
-    private Label dayOfWeekLabelD5;
 
     @FXML
     private Label temperatureLabelD1;
@@ -86,8 +84,6 @@ public class MainWindowController extends BaseController implements Initializabl
     private Label temperatureLabelD3;
     @FXML
     private Label temperatureLabelD4;
-    @FXML
-    private Label temperatureLabelD5;
 
     @FXML
     private ImageView weatherImageD1;
@@ -97,8 +93,6 @@ public class MainWindowController extends BaseController implements Initializabl
     private ImageView weatherImageD3;
     @FXML
     private ImageView weatherImageD4;
-    @FXML
-    private ImageView weatherImageD5;
 
     @FXML
     private Label dayOfWeekLabelA1;
@@ -108,8 +102,6 @@ public class MainWindowController extends BaseController implements Initializabl
     private Label dayOfWeekLabelA3;
     @FXML
     private Label dayOfWeekLabelA4;
-    @FXML
-    private Label dayOfWeekLabelA5;
 
     @FXML
     private Label temperatureLabelA1;
@@ -119,8 +111,6 @@ public class MainWindowController extends BaseController implements Initializabl
     private Label temperatureLabelA3;
     @FXML
     private Label temperatureLabelA4;
-    @FXML
-    private Label temperatureLabelA5;
 
     @FXML
     private ImageView weatherImageA1;
@@ -130,8 +120,6 @@ public class MainWindowController extends BaseController implements Initializabl
     private ImageView weatherImageA3;
     @FXML
     private ImageView weatherImageA4;
-    @FXML
-    private ImageView weatherImageA5;
 
 
     @FXML
@@ -263,7 +251,6 @@ public class MainWindowController extends BaseController implements Initializabl
         weatherImageA2.setImage(getWeatherPictureForDay(dayNumber++, weatherDailyForecasts));
         weatherImageA3.setImage(getWeatherPictureForDay(dayNumber++, weatherDailyForecasts));
         weatherImageA4.setImage(getWeatherPictureForDay(dayNumber++, weatherDailyForecasts));
-        weatherImageA5.setImage(getWeatherPictureForDay(dayNumber++, weatherDailyForecasts));
     }
 
 
@@ -274,7 +261,6 @@ public class MainWindowController extends BaseController implements Initializabl
         weatherImageD2.setImage(getWeatherPictureForDay(dayNumber++, weatherDailyForecasts));
         weatherImageD3.setImage(getWeatherPictureForDay(dayNumber++, weatherDailyForecasts));
         weatherImageD4.setImage(getWeatherPictureForDay(dayNumber++, weatherDailyForecasts));
-        weatherImageD5.setImage(getWeatherPictureForDay(dayNumber++, weatherDailyForecasts));
     }
 
     private void setWeekdayLabelsForAdditionalCity(List<DailyForecast> weatherDailyForecasts) {
@@ -288,8 +274,6 @@ public class MainWindowController extends BaseController implements Initializabl
         dayOfWeekLabelA3.setText(dateManager.convertTimeToDayOfWeek(weatherDailyForecasts.get(dayNumber++).getTime(),
                 additionalCity.getCountryCode()).toUpperCase());
         dayOfWeekLabelA4.setText(dateManager.convertTimeToDayOfWeek(weatherDailyForecasts.get(dayNumber++).getTime(),
-                additionalCity.getCountryCode()).toUpperCase());
-        dayOfWeekLabelA5.setText(dateManager.convertTimeToDayOfWeek(weatherDailyForecasts.get(dayNumber++).getTime(),
                 additionalCity.getCountryCode()).toUpperCase());
     }
 
@@ -305,8 +289,6 @@ public class MainWindowController extends BaseController implements Initializabl
                 defaultCity.getCountryCode()).toUpperCase());
         dayOfWeekLabelD4.setText(dateManager.convertTimeToDayOfWeek(weatherDailyForecasts.get(dayNumber++).getTime(),
                 defaultCity.getCountryCode()).toUpperCase());
-        dayOfWeekLabelD5.setText(dateManager.convertTimeToDayOfWeek(weatherDailyForecasts.get(dayNumber++).getTime(),
-                defaultCity.getCountryCode()).toUpperCase());
     }
 
 
@@ -321,8 +303,6 @@ public class MainWindowController extends BaseController implements Initializabl
                 " °C");
         temperatureLabelA4.setText(String.valueOf(Math.round(weatherDailyForecasts.get(dayNumber++).getTemperature())) +
                 " °C");
-        temperatureLabelA5.setText(String.valueOf(Math.round(weatherDailyForecasts.get(dayNumber++).getTemperature())) +
-                " °C");
     }
 
     private void setForecastTemperatureLabelsInDefaultCity(List<DailyForecast> weatherDailyForecasts) {
@@ -335,8 +315,6 @@ public class MainWindowController extends BaseController implements Initializabl
         temperatureLabelD3.setText(String.valueOf(Math.round(weatherDailyForecasts.get(dayNumber++).getTemperature())) +
                 " °C");
         temperatureLabelD4.setText(String.valueOf(Math.round(weatherDailyForecasts.get(dayNumber++).getTemperature())) +
-                " °C");
-        temperatureLabelD5.setText(String.valueOf(Math.round(weatherDailyForecasts.get(dayNumber++).getTemperature())) +
                 " °C");
     }
 }

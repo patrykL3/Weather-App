@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anch" prefHeight="619.0" prefWidth="545.0" styleClass="container" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="550.0" prefWidth="545.0" styleClass="container" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <MenuBar prefHeight="29.0" prefWidth="1060.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <menus>
@@ -123,7 +123,7 @@
             <String fx:value="box_background" />
          </styleClass>
       </VBox>
-      <VBox fx:id="myVBox" layoutX="21.0" layoutY="291.0" prefHeight="178.0" prefWidth="240.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="290.0">
+      <VBox fx:id="myVBox" layoutX="21.0" layoutY="291.0" prefHeight="244.0" prefWidth="240.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="290.0">
          <children>
             <HBox prefHeight="60.0" prefWidth="240.0" styleClass="border-bottom">
                <children>
@@ -213,11 +213,11 @@
                   <Insets left="5.0" right="5.0" />
                </padding>
             </HBox>
-            <HBox prefHeight="60.0" prefWidth="240.0" styleClass="border-bottom">
+            <HBox prefHeight="60.0" prefWidth="240.0">
                <children>
                   <Label fx:id="dayOfWeekLabelD4" contentDisplay="CENTER" prefHeight="40.0" prefWidth="103.0" text="Poniedziałek">
                      <HBox.margin>
-                        <Insets bottom="10.0" top="10.0" />
+                        <Insets bottom="10.0" left="1.0" top="10.0" />
                      </HBox.margin>
                      <padding>
                         <Insets right="5.0" />
@@ -242,36 +242,6 @@
                <padding>
                   <Insets left="5.0" right="5.0" />
                </padding>
-            </HBox>
-            <HBox prefHeight="60.0" prefWidth="240.0">
-               <children>
-                  <Label fx:id="dayOfWeekLabelD5" contentDisplay="CENTER" prefHeight="40.0" prefWidth="103.0" text="Poniedziałek">
-                     <HBox.margin>
-                        <Insets bottom="10.0" left="1.0" top="10.0" />
-                     </HBox.margin>
-                     <padding>
-                        <Insets right="5.0" />
-                     </padding>
-                     <styleClass>
-                        <String fx:value="font-mid-5" />
-                        <String fx:value="border-right" />
-                        <String fx:value="bold" />
-                     </styleClass>
-                  </Label>
-                  <Label fx:id="temperatureLabelD5" alignment="CENTER" prefHeight="60.0" prefWidth="55.0" styleClass="font-big-1" text="15C" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
-                     <HBox.margin>
-                        <Insets left="3.0" right="3.0" />
-                     </HBox.margin>
-                  </Label>
-                  <ImageView fx:id="weatherImageD5" fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
-                     <HBox.margin>
-                        <Insets bottom="5.0" top="5.0" />
-                     </HBox.margin>
-                  </ImageView>
-               </children>
-               <padding>
-                  <Insets left="5.0" right="5.0" />
-               </padding>
                <VBox.margin>
                   <Insets bottom="3.0" />
                </VBox.margin>
@@ -283,7 +253,7 @@
          </styleClass>
       </VBox>
       <Button fx:id="addSecondLocationButton" layoutX="347.0" layoutY="167.0" mnemonicParsing="false" onAction="#setSecondLocationAction" prefHeight="60.0" prefWidth="115.0" styleClass="add-button" text="DODAJ LOKALIZACJĘ" />
-      <VBox fx:id="weatherForecastForAdditionalCityVBox" layoutX="31.0" layoutY="301.0" prefHeight="178.0" prefWidth="240.0" visible="false" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="290.0">
+      <VBox fx:id="weatherForecastForAdditionalCityVBox" layoutX="31.0" layoutY="301.0" prefHeight="244.0" prefWidth="240.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="290.0">
          <children>
             <HBox prefHeight="60.0" prefWidth="240.0" styleClass="border-bottom">
                <children>
@@ -363,41 +333,15 @@
                   <Insets left="5.0" right="5.0" />
                </padding>
             </HBox>
-            <HBox prefHeight="60.0" prefWidth="240.0" styleClass="border-bottom">
-               <children>
-                  <ImageView fx:id="weatherImageA4" fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
-                     <HBox.margin>
-                        <Insets bottom="5.0" top="5.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <Label fx:id="temperatureLabelA4" alignment="CENTER" prefHeight="60.0" prefWidth="55.0" styleClass="font-big-1" text="15C" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
-                  <Label fx:id="dayOfWeekLabelA4" contentDisplay="CENTER" prefHeight="40.0" prefWidth="103.0" text="Poniedziałek">
-                     <padding>
-                        <Insets left="7.0" />
-                     </padding>
-                     <HBox.margin>
-                        <Insets top="10.0" />
-                     </HBox.margin>
-                     <styleClass>
-                        <String fx:value="font-mid-5" />
-                        <String fx:value="border-left" />
-                        <String fx:value="bold" />
-                     </styleClass>
-                  </Label>
-               </children>
-               <padding>
-                  <Insets left="5.0" right="5.0" />
-               </padding>
-            </HBox>
             <HBox prefHeight="60.0" prefWidth="240.0">
                <children>
-                  <ImageView fx:id="weatherImageA5" fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="weatherImageA4" fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
                      <HBox.margin>
                         <Insets bottom="5.0" left="3.0" top="5.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Label fx:id="temperatureLabelA5" alignment="CENTER" prefHeight="60.0" prefWidth="55.0" styleClass="font-big-1" text="15C" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
-                  <Label fx:id="dayOfWeekLabelA5" contentDisplay="CENTER" prefHeight="40.0" prefWidth="103.0" text="Poniedziałek">
+                  <Label fx:id="temperatureLabelA4" alignment="CENTER" prefHeight="60.0" prefWidth="55.0" styleClass="font-big-1" text="15C" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
+                  <Label fx:id="dayOfWeekLabelA4" contentDisplay="CENTER" prefHeight="40.0" prefWidth="103.0" text="Poniedziałek">
                      <padding>
                         <Insets left="7.0" />
                      </padding>
