@@ -8,7 +8,7 @@ import com.github.prominence.openweathermap.api.model.response.Weather;
 
 public class CurrentWeather {
 
-    private Weather currentWeatherData;
+    private final Weather currentWeatherData;
 
     public CurrentWeather(Weather currentWeatherData) {
         this.currentWeatherData = currentWeatherData;
@@ -31,23 +31,25 @@ public class CurrentWeather {
     }
 
     public boolean isItRainingNow() {
-        try {
+
+        if (currentWeatherData.getRain() != null) {
             byte rainVolume = currentWeatherData.getRain().getRainVolumeLast3Hrs();
-            if(rainVolume > 0) {
+            if (rainVolume > 0) {
                 return true;
             }
-        } catch (Exception ex) {}
+        }
 
         return false;
     }
 
     public boolean isItSnowingNow() {
-        try {
+
+        if (currentWeatherData.getSnow() != null) {
             byte snowVolume = currentWeatherData.getSnow().getSnowVolumeLast3Hrs();
-            if(snowVolume > 0) {
+            if (snowVolume > 0) {
                 return true;
             }
-        } catch (Exception ex) {}
+        }
 
         return false;
     }

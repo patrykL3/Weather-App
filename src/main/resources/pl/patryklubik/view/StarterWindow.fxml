@@ -11,7 +11,8 @@
 
 <AnchorPane prefHeight="227.0" prefWidth="314.0" styleClass="container" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Button layoutX="111.0" layoutY="160.0" mnemonicParsing="false" onAction="#DefaultCitySelectButtonAction" prefHeight="38.0" prefWidth="94.0" styleClass="choice-button" text="ZATWIERDŹ" textAlignment="CENTER" />
+        <Button layoutX="111.0" layoutY="160.0" mnemonicParsing="false" onAction="#defaultCitySelectButtonAction"
+                prefHeight="38.0" prefWidth="94.0" styleClass="choice-button" text="ZATWIERDŹ" textAlignment="CENTER" />
         <TextField fx:id="defaultCityField" alignment="CENTER" layoutX="31.0" layoutY="123.0" prefHeight="26.0" prefWidth="272.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
@@ -22,7 +23,8 @@
             <String fx:value="bold" />
             <String fx:value="font-big-2" />
          </styleClass></Label>
-      <ImageView fitHeight="68.0" fitWidth="68.0" layoutX="53.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="68.0" fitWidth="68.0" layoutX="53.0" layoutY="18.0" pickOnBounds="true"
+                  preserveRatio="true">
          <image>
             <Image url="@mainIcon.png" />
          </image>

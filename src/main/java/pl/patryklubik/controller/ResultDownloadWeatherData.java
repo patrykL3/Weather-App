@@ -6,5 +6,5 @@ package pl.patryklubik.controller;
 public enum ResultDownloadWeatherData {
     SUCCESS,
     FAILED_BY_INVALID_CITY_NAME_ERROR,
-    FAILED_BY_UNEXPECTED_ERROR;
+    FAILED_BY_UNEXPECTED_ERROR
 }

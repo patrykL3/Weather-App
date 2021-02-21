@@ -6,5 +6,5 @@ package pl.patryklubik.model;
 
 public enum CityType {
     DEFAULT,
-    ADDITIONAL;
+    ADDITIONAL
 }

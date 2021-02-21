@@ -17,35 +17,50 @@ public class FewDaysForecast {
 
     private HourlyForecast fullWeatherForecast;
     private DateManager dateManager = new DateManager();
+    public static final int NUMBER_POINT_IN_ONE_DAY = 8;
 
     public FewDaysForecast(HourlyForecast fullWeatherForecast) {
         this.fullWeatherForecast = fullWeatherForecast;
     }
 
-    public List<DailyForecast> getNextFewDaysForecast () {
-        List<DailyForecast> fewDaysForecastData = new ArrayList<DailyForecast>();
+    public List<DailyForecast> getNextFewDaysForecast() {
+        List<DailyForecast> fewDaysForecastData = new ArrayList<>();
         String countryCode = fullWeatherForecast.getCountry();
-        int startPointOfNextFewDaysForecast = getStartPointOfNextFewDaysForecast(countryCode);
-
-        int dayStartPoint = startPointOfNextFewDaysForecast;
-        int numberPointInOneDay = 8;
+        int dayStartPoint = getStartPointOfNextFewDaysForecast(countryCode);
 
         while (isPointInForecastExist(dayStartPoint)) {
             fewDaysForecastData.add(getDayData(dayStartPoint));
-            dayStartPoint += numberPointInOneDay;
+            dayStartPoint += NUMBER_POINT_IN_ONE_DAY;
         }
 
         return fewDaysForecastData;
     }
 
+    private int getStartPointOfNextFewDaysForecast(String countryCode) {
+        int startPoint = 0;
+        String currentDayNumber = dateManager.getCurrentDayNumberInCountry(countryCode);
+        long timeInPoint = fullWeatherForecast.getForecasts().get(startPoint).getDataCalculationDate().getTime();
+        String numberDayInPoint = dateManager.getDayNumberInCountry(countryCode, timeInPoint);
+
+        if (!currentDayNumber.equals(numberDayInPoint)) {
+            return startPoint;
+        } else {
+            while(currentDayNumber.equals(numberDayInPoint)) {
+                startPoint++;
+                timeInPoint = fullWeatherForecast.getForecasts().get(startPoint).getDataCalculationDate().getTime();
+                numberDayInPoint = dateManager.getDayNumberInCountry(countryCode, timeInPoint);
+            }
+        }
+
+        return startPoint;
+    }
+
     private boolean isPointInForecastExist(int dayStartPoint) {
         boolean isPointExist = false;
 
-        try {
-            fullWeatherForecast.getForecasts().get(dayStartPoint);
+        if (fullWeatherForecast.getForecasts().size() > dayStartPoint) {
             isPointExist = true;
-
-        } catch (Exception ex) {}
+        }
 
         return isPointExist;
     }
@@ -61,19 +76,15 @@ public class FewDaysForecast {
 
     private float getMaxDayTemperature(int dayStartPoint) {
         float maxDayTemperature = 0;
-        int numberPointInOneDay = 8;
 
-        for(int i = dayStartPoint; i < dayStartPoint + numberPointInOneDay; i++) {
-            try {
-                float pointTemperature =
-                        fullWeatherForecast.getForecasts().get(i).getWeatherInfo().getTemperature();
+        for (int i = dayStartPoint; i < dayStartPoint + NUMBER_POINT_IN_ONE_DAY && fullWeatherForecast.getForecasts().size() > i; i++) {
+            float pointTemperature = fullWeatherForecast.getForecasts().get(i).getWeatherInfo().getTemperature();
 
-                if(i == dayStartPoint) {
-                    maxDayTemperature = pointTemperature;
-                } else if (pointTemperature > maxDayTemperature) {
-                    maxDayTemperature = pointTemperature;
-                }
-            } catch (Exception ex) {}
+            if (i == dayStartPoint) {
+                maxDayTemperature = pointTemperature;
+            } else if (pointTemperature > maxDayTemperature) {
+                maxDayTemperature = pointTemperature;
+            }
         }
 
         return maxDayTemperature;
@@ -81,15 +92,12 @@ public class FewDaysForecast {
 
     private boolean isItSnowingAtDay(int dayStartPoint) {
         boolean isItSnowing = false;
-        int numberPointInOneDay = 8;
 
-        for(int i = dayStartPoint; i < dayStartPoint + numberPointInOneDay; i++) {
-            try {
-                Snow snowInPoint = fullWeatherForecast.getForecasts().get(i).getSnow();
-                if(snowInPoint != null && !String.valueOf(snowInPoint).equals("Snow(last 3 hrs): 0 mm")) {
-                    isItSnowing = true;
-                }
-            } catch (Exception ex) {}
+        for (int i = dayStartPoint; i < dayStartPoint + NUMBER_POINT_IN_ONE_DAY && fullWeatherForecast.getForecasts().size() > i; i++) {
+            Snow snowInPoint = fullWeatherForecast.getForecasts().get(i).getSnow();
+            if (snowInPoint != null && snowInPoint.getSnowVolumeLast3Hrs() != 0) {
+                isItSnowing = true;
+            }
         }
 
         return isItSnowing;
@@ -97,36 +105,14 @@ public class FewDaysForecast {
 
     private boolean isItRainingAtDay(int dayStartPoint) {
         boolean isItRaining = false;
-        int numberPointInOneDay = 8;
 
-        for(int i = dayStartPoint; i < dayStartPoint + numberPointInOneDay; i++) {
-            try {
-                Rain rainInPoint = fullWeatherForecast.getForecasts().get(i).getRain();
-                if(rainInPoint != null && !String.valueOf(rainInPoint).equals("Rain(last 3 hrs): 0 mm")) {
-                    isItRaining = true;
-                }
-            } catch (Exception ex) {}
-        }
-
-        return isItRaining;
-    }
-
-    private int getStartPointOfNextFewDaysForecast(String countryCode) {
-        int startPoint = 0;
-        String currentDayNumber = dateManager.getCurrentDayNumberInCountry(countryCode);
-        long timeInPoint = fullWeatherForecast.getForecasts().get(startPoint).getDataCalculationDate().getTime();
-        String numberDayInPoint = dateManager.getDayNumberInCountry(countryCode, timeInPoint);
-
-        if(!currentDayNumber.equals(numberDayInPoint)) {
-            return startPoint;
-        } else {
-            while(currentDayNumber.equals(numberDayInPoint)) {
-                startPoint++;
-                timeInPoint = fullWeatherForecast.getForecasts().get(startPoint).getDataCalculationDate().getTime();
-                numberDayInPoint = dateManager.getDayNumberInCountry(countryCode, timeInPoint);
+        for (int i = dayStartPoint; i < dayStartPoint + NUMBER_POINT_IN_ONE_DAY && fullWeatherForecast.getForecasts().size() > i; i++) {
+            Rain rainInPoint = fullWeatherForecast.getForecasts().get(i).getRain();
+            if (rainInPoint != null && rainInPoint.getRainVolumeLast3Hrs() != 0) {
+                isItRaining = true;
             }
         }
 
-        return startPoint;
+        return isItRaining;
     }
 }

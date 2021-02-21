@@ -26,7 +26,7 @@ public class ProgramState {
 
 
     public void init() {
-        this.checkData();
+        checkData();
     }
 
     private void checkData() {
@@ -39,7 +39,7 @@ public class ProgramState {
             savedDefaultCityName = applicationData.getCityName(CityType.DEFAULT);
             citiesManager.getCityByType(CityType.DEFAULT).setCityName(savedDefaultCityName);
 
-            if(applicationData.cityExist(CityType.ADDITIONAL)) {
+            if (applicationData.cityExist(CityType.ADDITIONAL)) {
                 savedAdditionalCityName = applicationData.getCityName(CityType.ADDITIONAL);
                 citiesManager.getCityByType(CityType.ADDITIONAL).setCityName(savedAdditionalCityName);
             }

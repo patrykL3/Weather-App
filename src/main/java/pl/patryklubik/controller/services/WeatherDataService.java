@@ -12,10 +12,7 @@ import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import pl.patryklubik.CitiesManager;
 import pl.patryklubik.controller.ResultDownloadWeatherData;
-import pl.patryklubik.model.City;
-import pl.patryklubik.model.CityType;
-import pl.patryklubik.model.Config;
-import pl.patryklubik.model.FewDaysForecast;
+import pl.patryklubik.model.*;
 
 
 /**
@@ -27,7 +24,7 @@ public class WeatherDataService extends Service<ResultDownloadWeatherData> {
     private final OpenWeatherMapManager openWeatherManager;
     private final String unit = Unit.METRIC_SYSTEM;
     private final String accuracy = Accuracy.ACCURATE;
-    private City city;
+    private final City city;
 
 
     public WeatherDataService(CitiesManager citiesManager, CityType cityType) {
@@ -42,9 +39,9 @@ public class WeatherDataService extends Service<ResultDownloadWeatherData> {
 
     @Override
     protected Task<ResultDownloadWeatherData> createTask() {
-        return new Task<ResultDownloadWeatherData>() {
+        return new Task<>() {
             @Override
-            protected ResultDownloadWeatherData call() throws Exception {
+            protected ResultDownloadWeatherData call() {
                 return downloadWeatherData();
             }
         };
@@ -53,8 +50,9 @@ public class WeatherDataService extends Service<ResultDownloadWeatherData> {
     private ResultDownloadWeatherData downloadWeatherData() {
 
         try {
-            city.setCurrentWeather(this.getCurrentDayWeather());
+            city.setCurrentWeather(new CurrentWeather(getCurrentDayWeather()));
             city.setWeatherDailyForecast( new FewDaysForecast(getWeatherForecast()));
+            return ResultDownloadWeatherData.SUCCESS;
 
         } catch (DataNotFoundException e) {
             e.printStackTrace();
@@ -66,30 +64,25 @@ public class WeatherDataService extends Service<ResultDownloadWeatherData> {
             city.setCityName("");
             return  ResultDownloadWeatherData.FAILED_BY_UNEXPECTED_ERROR;
         }
-
-        return ResultDownloadWeatherData.SUCCESS;
     }
 
     private HourlyForecast getWeatherForecast() {
         HourlyForecastRequester forecastRequester = openWeatherManager.getHourlyForecastRequester();
-        HourlyForecast forecastResponse = forecastRequester
+
+        return forecastRequester
                 .setLanguage(Config.getAppLanguage())
                 .setUnitSystem(unit)
                 .setAccuracy(accuracy)
                 .getByCityName(city.getCityName());
-
-        return forecastResponse;
     }
 
-    private Weather getCurrentDayWeather(){
+    private Weather getCurrentDayWeather() {
         WeatherRequester weatherRequester = openWeatherManager.getWeatherRequester();
 
-        Weather weatherResponse = weatherRequester
+        return weatherRequester
                 .setLanguage(Config.getAppLanguage())
                 .setUnitSystem(unit)
                 .setAccuracy(accuracy)
                 .getByCityName(city.getCityName());
-
-        return weatherResponse;
     }
 }

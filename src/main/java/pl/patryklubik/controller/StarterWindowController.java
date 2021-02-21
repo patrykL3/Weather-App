@@ -17,6 +17,9 @@ import javafx.stage.Stage;
 public class StarterWindowController extends BaseController {
 
     private WeatherDataService weatherDataService;
+    private final String ENTER_CITY_NAME_LABEL_TEXT = "WPROWADŹ NAZWĘ MIASTA";
+    private final String INVALID_CITY_NAME_LABEL_TEXT = "NIEPOPRAWNA NAZWA MIEJSCOWOŚCI";
+    private final String UNEXPECTED_ERROR_LABEL_TEXT = "NIESPODZIEWANY BŁĄD";
 
     @FXML
     private TextField defaultCityField;
@@ -24,8 +27,13 @@ public class StarterWindowController extends BaseController {
     @FXML
     private Label errorLabel;
 
+    public StarterWindowController(CitiesManager citiesManager, ViewFactory viewFactory, String fxmlName) {
+        super(citiesManager, viewFactory, fxmlName);
+        this.weatherDataService = new WeatherDataService(citiesManager, CityType.DEFAULT);
+    }
+
     @FXML
-    void DefaultCitySelectButtonAction() {
+    void defaultCitySelectButtonAction() {
         if (fieldAreValid()) {
         weatherDataService.setCityName(defaultCityField.getText());
         weatherDataService.restart();
@@ -37,15 +45,10 @@ public class StarterWindowController extends BaseController {
         }
     }
 
-    public StarterWindowController(CitiesManager citiesManager, ViewFactory viewFactory, String fxmlName) {
-        super(citiesManager, viewFactory, fxmlName);
-        this.weatherDataService = new WeatherDataService(citiesManager, CityType.DEFAULT);
-    }
-
     private boolean fieldAreValid() {
 
         if(defaultCityField.getText().isEmpty()) {
-            errorLabel.setText("WPROWADŹ NAZWĘ MIASTA");
+            errorLabel.setText(ENTER_CITY_NAME_LABEL_TEXT);
             errorLabel.setVisible(true);
             return false;
         }
@@ -59,15 +62,15 @@ public class StarterWindowController extends BaseController {
                 viewFactory.showMainWindow();
                 Stage stage = (Stage) errorLabel.getScene().getWindow();
                 viewFactory.closeStage(stage);
-                return;
+                break;
             case FAILED_BY_INVALID_CITY_NAME_ERROR:
-                errorLabel.setText("NIEPOPRAWNA NAZWA MIEJSCOWOŚCI");
+                errorLabel.setText(INVALID_CITY_NAME_LABEL_TEXT);
                 errorLabel.setVisible(true);
-                return;
+                break;
             case FAILED_BY_UNEXPECTED_ERROR:
-                errorLabel.setText("NIESPODZIEWANY BŁĄD");
+                errorLabel.setText(UNEXPECTED_ERROR_LABEL_TEXT);
                 errorLabel.setVisible(true);
-                return;
+                break;
         }
     }
 }
