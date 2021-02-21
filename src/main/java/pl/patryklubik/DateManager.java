@@ -11,15 +11,26 @@ import java.util.*;
 
 public class DateManager {
 
-    public String convertTimeToDayOfWeek(long time, String countryCode) {
-        String dayOfWeekPattern = "EEEEEEE";
+    public static final String FULL_DAY_OF_WEEKDAY_PATTERN = "EEEEEEE";
+    public static final String DATE_PATTERN = "dd-MM-yyyy";
+    public static final String DAY_NUMBER_PATTERN = "dd";
 
-        return getDateFromPattern(dayOfWeekPattern, getTimeZone(countryCode), time);
+    public String convertTimeToDayOfWeek(long time, String countryCode) {
+        return getDateFromPattern(FULL_DAY_OF_WEEKDAY_PATTERN, getTimeZone(countryCode), time);
     }
 
     public String getCurrentDayOfWeek(String countryCode) {
-        String dayOfWeekPattern = "EEEEEEE";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dayOfWeekPattern);
+
+        return formatDateData(countryCode, FULL_DAY_OF_WEEKDAY_PATTERN);
+    }
+
+    public String getCurrentDate(String countryCode) {
+
+        return formatDateData(countryCode, DATE_PATTERN);
+    }
+
+    private String formatDateData(String countryCode, String pattern) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         GregorianCalendar calendar = new GregorianCalendar();
 
         simpleDateFormat.setTimeZone(getTimeZone(countryCode));
@@ -27,20 +38,19 @@ public class DateManager {
         return simpleDateFormat.format(calendar.getTime());
     }
 
-    public String getCurrentDate(String countryCode) {
-        String dayOfWeekPattern = "dd-MM-yyyy";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dayOfWeekPattern);
+    private String formatDateData(String countryCode, String pattern, long time) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         GregorianCalendar calendar = new GregorianCalendar();
 
         simpleDateFormat.setTimeZone(getTimeZone(countryCode));
+        calendar.setTimeInMillis(time);
 
         return simpleDateFormat.format(calendar.getTime());
     }
 
     public String getTimeZoneName(String countryCode) {
-        String timeZoneName = getTimeZone(countryCode).getDisplayName(true, 0);
 
-        return timeZoneName;
+        return getTimeZone(countryCode).getDisplayName(true, 0);
     }
 
     private String getDateFromPattern(String pattern, TimeZone timeZone, long time) {
@@ -54,27 +64,19 @@ public class DateManager {
         return simpleDateFormat.format(calendar.getTime());
     }
 
-    public String getCurrentDayNumberInCountry(String countryCode){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd");
-        GregorianCalendar calendar = new GregorianCalendar();
-        simpleDateFormat.setTimeZone(getTimeZone(countryCode));
+    public String getCurrentDayNumberInCountry(String countryCode) {
 
-        return simpleDateFormat.format(calendar.getTime());
+        return formatDateData(countryCode, DAY_NUMBER_PATTERN);
     }
 
-    public String getDayNumberInCountry(String countryCode, long time){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd");
-        GregorianCalendar calendar = new GregorianCalendar();
-        simpleDateFormat.setTimeZone(getTimeZone(countryCode));
-        calendar.setTimeInMillis(time);
+    public String getDayNumberInCountry(String countryCode, long time) {
 
-        return simpleDateFormat.format(calendar.getTime());
+        return formatDateData(countryCode, DAY_NUMBER_PATTERN, time);
     }
 
     private TimeZone getTimeZone(String countryCode) {
         String countryTimeZoneId = com.ibm.icu.util.TimeZone.getAvailableIDs(countryCode)[0];
-        TimeZone countryTimeZone = TimeZone.getTimeZone(countryTimeZoneId);
 
-        return countryTimeZone;
+        return TimeZone.getTimeZone(countryTimeZoneId);
     }
 }

@@ -20,10 +20,12 @@ import java.util.ResourceBundle;
  */
 public class CitySelectionWindowController extends BaseController implements Initializable {
 
-    private WeatherDataService weatherDataService;
+    private final WeatherDataService weatherDataService;
     private final CityType cityType;
-    private CitiesManager citiesManager;
-
+    private final String INVALID_CITY_NAME_MESSAGE = "NIEPOPRAWNA NAZWA MIEJSCOWOŚCI";
+    private final String UNEXPECTED_ERROR_MESSAGE = "NIESPODZIEWANY BŁĄD";
+    private final String DEFAULT_CITY_HEADER_LABEL_TEXT = "Wprowadź nazwę Twojego miasta:";
+    private final String ADDITIONAL_CITY_HEADER_LABEL_TEXT = "Wprowadź nazwę dodatkowego miasta:";
 
     @FXML
     private TextField cityField;
@@ -34,14 +36,21 @@ public class CitySelectionWindowController extends BaseController implements Ini
     @FXML
     private Label headerLabel;
 
+    public CitySelectionWindowController(CitiesManager citiesManager, ViewFactory viewFactory,
+                                         String fxmlName, CityType cityType) {
+        super(citiesManager, viewFactory, fxmlName);
+        this.cityType = cityType;
+        this.weatherDataService = new WeatherDataService(citiesManager, cityType);
+    }
+
     @FXML
-    void CancelButtonAction(ActionEvent event) {
+    void cancelButtonAction(ActionEvent event) {
         Stage thisStage = (Stage) errorLabel.getScene().getWindow();
         viewFactory.closeStage(thisStage);
     }
 
     @FXML
-    void CitySelectButtonAction() {
+    void citySelectButtonAction() {
         weatherDataService.setCityName(cityField.getText());
         weatherDataService.restart();
 
@@ -51,14 +60,6 @@ public class CitySelectionWindowController extends BaseController implements Ini
         });
     }
 
-    public CitySelectionWindowController(CitiesManager citiesManager, ViewFactory viewFactory,
-                                         String fxmlName, CityType cityType) {
-        super(citiesManager, viewFactory, fxmlName);
-        this.cityType = cityType;
-        this.citiesManager = citiesManager;
-        this.weatherDataService = new WeatherDataService(citiesManager, cityType);
-    }
-
     private void reactToDownloadWeatherDataResult(ResultDownloadWeatherData resultDownloadWeatherData) {
         switch (resultDownloadWeatherData) {
             case SUCCESS:
@@ -66,11 +67,11 @@ public class CitySelectionWindowController extends BaseController implements Ini
                 viewFactory.showMainWindow();
                 return;
             case FAILED_BY_INVALID_CITY_NAME_ERROR:
-                errorLabel.setText("NIEPOPRAWNA NAZWA MIEJSCOWOŚCI");
+                errorLabel.setText(INVALID_CITY_NAME_MESSAGE);
                 errorLabel.setVisible(true);
                 return;
             case FAILED_BY_UNEXPECTED_ERROR:
-                errorLabel.setText("NIESPODZIEWANY BŁĄD");
+                errorLabel.setText(UNEXPECTED_ERROR_MESSAGE);
                 errorLabel.setVisible(true);
                 return;
         }
@@ -79,16 +80,16 @@ public class CitySelectionWindowController extends BaseController implements Ini
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setHeaderLabel(cityType);
-        if(citiesManager.getCityByType(cityType).getCityName() != null) {
+        if (citiesManager.getCityByType(cityType).getCityName() != null) {
             cityField.setText(citiesManager.getCityByType(cityType).getCityName());
         }
     }
 
     private void setHeaderLabel(CityType cityType) {
-        if(cityType == CityType.DEFAULT) {
-            headerLabel.setText("Wprowadź nazwę Twojego miasta:");
-        } else if(cityType == CityType.ADDITIONAL) {
-            headerLabel.setText("Wprowadź nazwę dodatkowego miasta:");
+        if (cityType == CityType.DEFAULT) {
+            headerLabel.setText(DEFAULT_CITY_HEADER_LABEL_TEXT);
+        } else if (cityType == CityType.ADDITIONAL) {
+            headerLabel.setText(ADDITIONAL_CITY_HEADER_LABEL_TEXT);
         }
     }
 }

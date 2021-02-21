@@ -10,8 +10,8 @@ import pl.patryklubik.view.ViewFactory;
 public abstract class BaseController {
 
     protected ViewFactory viewFactory;
+    protected final CitiesManager citiesManager;
     private String fxmlName;
-    private CitiesManager citiesManager;
 
     public BaseController(CitiesManager citiesManager, ViewFactory viewFactory, String fxmlName) {
         this.citiesManager = citiesManager;

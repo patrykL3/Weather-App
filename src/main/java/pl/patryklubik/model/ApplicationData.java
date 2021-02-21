@@ -4,8 +4,9 @@ import pl.patryklubik.CitiesManager;
 import pl.patryklubik.controller.services.WeatherDataService;
 
 import java.io.*;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Create by Patryk Łubik on 04.02.2021.
@@ -14,11 +15,12 @@ public class ApplicationData {
 
     private final String DATA_LOCATION = System.getProperty("user.home") + File.separator + "weatherAppData.ser";
     private CitiesManager citiesManager;
-    private HashMap<CityType,String> dataMap = new HashMap<CityType,String>();
+    private Map<CityType,String> dataMap = new EnumMap<>(CityType.class);
 
 
     public ApplicationData(CitiesManager citiesManager) {
         this.citiesManager = citiesManager;
+        loadData();
     }
 
     public void loadData() {
@@ -26,62 +28,51 @@ public class ApplicationData {
         try {
             File fileWithData = new File(DATA_LOCATION);
 
-            if(fileWithData.exists()) {
+            if (fileWithData.exists()) {
                 FileInputStream fileInputStream = new FileInputStream(DATA_LOCATION);
                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-                HashMap<CityType,String>  cities = (HashMap<CityType,String>) objectInputStream.readObject();
+                EnumMap<CityType,String> cities = (EnumMap<CityType,String>) objectInputStream.readObject();
                 dataMap = cities;
 
                 loadCityData(cities, CityType.DEFAULT);
                 loadCityData(cities, CityType.ADDITIONAL);
             }
 
-        } catch ( Exception e){
-            e.printStackTrace();
-        }
+        } catch ( Exception ignored) {}
 
     }
 
-    private void loadCityData(HashMap<CityType,String>  cities, CityType cityType) {
+    private void loadCityData(EnumMap<CityType,String>  cities, CityType cityType) {
         WeatherDataService weatherDataService = new WeatherDataService(citiesManager, cityType);
         weatherDataService.setCityName(cities.get(cityType));
         weatherDataService.restart();
     }
 
-    public void saveData(List<City> cities){
+    public void saveData(List<City> cities) {
 
-        try {
-            File file = new File(DATA_LOCATION);
+        File file = new File(DATA_LOCATION);
 
-            for (City city : cities) {
-                if(city.getCityType() == CityType.ADDITIONAL && city.getCityName() != null && city.getCityName() != "") {
-                    dataMap.put(CityType.ADDITIONAL,city.getCityName());
-                } else if(city.getCityType() == CityType.DEFAULT) {
-                    dataMap.put(CityType.DEFAULT,city.getCityName());
-                }
+        for (City city : cities) {
+            if (city.getCityName() != null && !city.getCityName().equals("")) {
+                dataMap.put(city.getCityType(),city.getCityName());
             }
+        }
 
-            if(!(dataMap.get(CityType.DEFAULT).isEmpty())) {
-                FileOutputStream fileOutputStream = new FileOutputStream(file);
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        if (!(dataMap.get(CityType.DEFAULT).isEmpty())) {
+            try (FileOutputStream fileOutputStream = new FileOutputStream(file);
+                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
 
                 objectOutputStream.writeObject(dataMap);
 
-                objectOutputStream.close();
-                fileOutputStream.close();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
     public boolean cityExist(CityType cityType) {
 
-        if (dataMap.get(cityType) != null && dataMap.get(cityType) != "") {
-            return true;
-        }
-
-        return false;
+        return dataMap.get(cityType) != null && !dataMap.get(cityType).equals("");
     }
 
     public String getCityName(CityType cityType) {

@@ -12,7 +12,7 @@ import java.util.List;
 
 public class CitiesManager {
 
-    private List<City> cities = new ArrayList<City>();
+    private List<City> cities = new ArrayList<>();
 
     public CitiesManager() {
         cities.add(new City(CityType.DEFAULT));
@@ -24,14 +24,9 @@ public class CitiesManager {
     }
 
     public City getCityByType(CityType cityType) {
-        City searchedCity = new City(cityType);
-
-        for (City city : cities) {
-            if(city.getCityType() == cityType) {
-                searchedCity = city;
-            }
-        }
-
-        return searchedCity;
+        return cities.stream()
+            .filter(city -> city.getCityType() == cityType)
+            .findFirst()
+            .orElseGet(() -> new City(cityType));
     }
 }

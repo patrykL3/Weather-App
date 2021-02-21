@@ -18,10 +18,6 @@ public class City {
         this.cityType = cityType;
     }
 
-    public City(String cityName, CityType cityType) {
-        this.cityName = cityName;
-        this.cityType = cityType;
-    }
 
     public CurrentWeather getCurrentWeather() {
         return currentWeather;
@@ -51,7 +47,7 @@ public class City {
         this.cityName = cityName;
     }
 
-    public void setCurrentWeather(Weather currentWeatherData) {
-        this.currentWeather = new CurrentWeather(currentWeatherData);
+    public void setCurrentWeather(CurrentWeather currentWeatherData) {
+        this.currentWeather = currentWeatherData;
     }
 }

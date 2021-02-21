@@ -12,12 +12,12 @@ public class Launcher extends Application {
     private final ProgramState programState = new ProgramState();
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         programState.init();
     }
 
         @Override
-    public void stop() throws Exception {
+    public void stop() {
         programState.saveData();
     }
 

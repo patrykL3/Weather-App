@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Create by Patryk Łubik on 23.01.2021.
@@ -20,33 +21,31 @@ import java.util.ArrayList;
 
 public class ViewFactory {
 
-    private final String STYLESHEET_PATH = "pl/patryklubik/view/Stylesheet.css";
-    private final String MAIN_ICON_PATH = "pl/patryklubik/view/mainIcon.png";
-    private CitiesManager citiesManager;
-    private ArrayList<Stage> activeStages;
+    private final static String STYLESHEET_PATH = "pl/patryklubik/view/Stylesheet.css";
+    private final CitiesManager citiesManager;
+    private final List<Stage> activeStages;
 
     public ViewFactory(CitiesManager citiesManager) {
 
         this.citiesManager = citiesManager;
-        activeStages = new ArrayList<Stage>();
+        activeStages = new ArrayList<>();
     }
 
-    public void showStarterWindow(){
+    public void showStarterWindow() {
 
         BaseController controller = new StarterWindowController(citiesManager, this, "StarterWindow.fxml");
         initializeStage(controller,false);
     }
 
-    public void showMainWindow(){
+    public void showMainWindow() {
 
         BaseController controller = new MainWindowController(citiesManager,this, "MainWindow.fxml");
         initializeStage(controller,false);
     }
 
-    public void showCitySelectionWindow(CityType cityType){
+    public void showCitySelectionWindow(CityType cityType) {
 
-        BaseController controller = new CitySelectionWindowController(citiesManager, this, "CitySelectionWindow" +
-                ".fxml", cityType);
+        BaseController controller = new CitySelectionWindowController(citiesManager, this, "CitySelectionWindow.fxml", cityType);
 
         initializeStage(controller,false);
     }
@@ -72,14 +71,14 @@ public class ViewFactory {
         Stage stage = new Stage();
         stage.setScene(scene);
         scene.getStylesheets().add(STYLESHEET_PATH);
-        stage.getIcons().add(new Image(MAIN_ICON_PATH));
+        stage.getIcons().add(new Image(IconProvider.getMainIconPath()));
         stage.setTitle("Weather-App");
         stage.show();
         stage.setResizable(resizable);
         activeStages.add(stage);
     }
 
-    public  void closeStage(Stage stageToClose){
+    public  void closeStage(Stage stageToClose) {
         stageToClose.close();
         activeStages.remove(stageToClose);
     }

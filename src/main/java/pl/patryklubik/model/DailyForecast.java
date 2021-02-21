@@ -6,10 +6,10 @@ package pl.patryklubik.model;
 
 public class DailyForecast {
 
-    private float temperature;
-    private long time;
-    private boolean snow;
-    private boolean rain;
+    private final float temperature;
+    private final long time;
+    private final boolean snow;
+    private final boolean rain;
 
     public DailyForecast(float temperature, long time, boolean snow, boolean rain) {
         this.temperature = temperature;
@@ -36,6 +36,6 @@ public class DailyForecast {
 
     @Override
     public String toString() {
-        return String.format("Snow: " + snow + ", Rain: " + rain + ", Temp.: " + temperature + ", Time: " + time);
+        return String.format("Snow: %s, Rain: %s, Temp.: %s, Time: %s", snow, rain, temperature, time);
     }
 }
