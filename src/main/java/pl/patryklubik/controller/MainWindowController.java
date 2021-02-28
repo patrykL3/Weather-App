@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -28,12 +30,37 @@ public class MainWindowController extends BaseController implements Initializabl
 
     private final DateManager dateManager;
     private final static String INFO_PAGE_PATH = "https://patryklubik.pl/weather-app/";
-    private final String PART_OF_DEFAULT_CITY_TIME_ZONE_LABEL_TEXT = "Strefa czasowa: ";
-    private final String PRESSURES_LABEL_TEXT = "Ciśnienie: ";
-    private final String HUMIDITY_LABEL_TEXT = "Wilgotność: ";
-    private final String PRESSURE_UNIT_IN_LABEL_TEXT = " hPa";
-    private final String TEMPERATURE_UNIT_IN_LABEL_TEXT = " °C";
-    private final String HUMIDITY_UNIT_IN_LABEL_TEXT = "%";
+
+    private final String SETTINGS_TEXT = LanguageData.getText("SETTINGS_TEXT");
+    private final String HOME_LOCATION_TEXT = LanguageData.getText("HOME_LOCATION_TEXT");
+    private final String SECOND_LOCATION_TEXT = LanguageData.getText("SECOND_LOCATION_TEXT");
+    private final String HELP_MENU_TEXT = LanguageData.getText("HELP_MENU_TEXT");
+    private final String ABOUT_APP_TEXT = LanguageData.getText("ABOUT_APP_TEXT");
+    private final String ADD_SECOND_LOCATION_BUTTON_TEXT = LanguageData.getText("ADD_SECOND_LOCATION_BUTTON_TEXT");
+
+    private final String PART_OF_DEFAULT_CITY_TIME_ZONE_LABEL_TEXT = LanguageData.getText("PART_OF_DEFAULT_CITY_TIME_ZONE_LABEL_TEXT");
+    private final String PRESSURES_LABEL_TEXT = LanguageData.getText("PRESSURES_LABEL_TEXT");
+    private final String HUMIDITY_LABEL_TEXT = LanguageData.getText("HUMIDITY_LABEL_TEXT");
+
+    private final String PRESSURE_UNIT_IN_LABEL_TEXT = LanguageData.getUnit("PRESSURE_UNIT_IN_LABEL_TEXT");
+    private final String TEMPERATURE_UNIT_IN_LABEL_TEXT = LanguageData.getUnit("TEMPERATURE_UNIT_IN_LABEL_TEXT");
+    private final String HUMIDITY_UNIT_IN_LABEL_TEXT = LanguageData.getUnit("HUMIDITY_UNIT_IN_LABEL_TEXT");
+
+    @FXML
+    private Menu settingsMenu;
+
+    @FXML
+    private MenuItem homeLocationMenuItem;
+
+    @FXML
+    private Menu helpMenu;
+
+    @FXML
+    private MenuItem aboutApp;
+
+    @FXML
+    private MenuItem secondLocationMenuItem;
+
 
     @FXML
     private Button addSecondLocationButton;
@@ -127,6 +154,7 @@ public class MainWindowController extends BaseController implements Initializabl
     @FXML
     private ImageView weatherImageA3;
 
+
     public MainWindowController(CitiesManager citiesManager, ViewFactory viewFactory, String fxmlName) {
         super(citiesManager, viewFactory, fxmlName);
         dateManager = new DateManager();
@@ -154,6 +182,7 @@ public class MainWindowController extends BaseController implements Initializabl
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        setText();
         setHeaderTimeData();
         setTodayCityData(CityType.DEFAULT);
         setWeatherDailyForecasts(CityType.DEFAULT);
@@ -165,6 +194,15 @@ public class MainWindowController extends BaseController implements Initializabl
             todayWeatherForAdditionalCityVBox.setVisible(true);
             addSecondLocationButton.setVisible(false);
         }
+    }
+
+    private void setText() {
+        settingsMenu.setText(SETTINGS_TEXT);
+        homeLocationMenuItem.setText(HOME_LOCATION_TEXT);
+        secondLocationMenuItem.setText(SECOND_LOCATION_TEXT);
+        helpMenu.setText(HELP_MENU_TEXT);
+        aboutApp.setText(ABOUT_APP_TEXT);
+        addSecondLocationButton.setText(ADD_SECOND_LOCATION_BUTTON_TEXT);
     }
 
     private void setHeaderTimeData() {

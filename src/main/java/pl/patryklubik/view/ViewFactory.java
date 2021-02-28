@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import pl.patryklubik.model.LanguageData;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,7 +73,7 @@ public class ViewFactory {
         stage.setScene(scene);
         scene.getStylesheets().add(STYLESHEET_PATH);
         stage.getIcons().add(new Image(IconProvider.getMainIconPath()));
-        stage.setTitle("Weather-App");
+        stage.setTitle(LanguageData.getText("APPLICATION_NAME"));
         stage.show();
         stage.setResizable(resizable);
         activeStages.add(stage);
