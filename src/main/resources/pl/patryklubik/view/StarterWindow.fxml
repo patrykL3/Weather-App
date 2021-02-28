@@ -11,14 +11,17 @@
 
 <AnchorPane prefHeight="227.0" prefWidth="314.0" styleClass="container" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Button layoutX="111.0" layoutY="160.0" mnemonicParsing="false" onAction="#defaultCitySelectButtonAction"
-                prefHeight="38.0" prefWidth="94.0" styleClass="choice-button" text="ZATWIERDŹ" textAlignment="CENTER" />
+        <Button fx:id="submitButton" layoutX="111.0" layoutY="160.0" mnemonicParsing="false"
+                onAction="#defaultCitySelectButtonAction"
+                prefHeight="38.0" prefWidth="94.0" styleClass="choice-button" textAlignment="CENTER" />
         <TextField fx:id="defaultCityField" alignment="CENTER" layoutX="31.0" layoutY="123.0" prefHeight="26.0" prefWidth="272.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor></TextField>
-        <Label alignment="CENTER" layoutX="5.0" layoutY="90.0" prefHeight="26.0" prefWidth="303.0" styleClass="font-mid-5" text="Wprowadź nazwę Twojego miasta:" />
-        <Label layoutX="129.0" layoutY="24.0" prefHeight="55.0" prefWidth="170.0" text="WEATHER-APP" textAlignment="CENTER">
+        <Label fx:id="headerLabel" alignment="CENTER" layoutX="5.0" layoutY="90.0" prefHeight="26.0"
+               prefWidth="303.0" styleClass="font-mid-5" />
+        <Label fx:id="applicationNameLabel" layoutX="129.0" layoutY="24.0" prefHeight="55.0" prefWidth="170.0"
+               textAlignment="CENTER">
          <styleClass>
             <String fx:value="bold" />
             <String fx:value="font-big-2" />
@@ -29,6 +32,6 @@
             <Image url="@mainIcon.png" />
          </image>
       </ImageView>
-      <Label fx:id="errorLabel" alignment="CENTER" layoutX="-1.0" layoutY="202.0" prefHeight="17.0" prefWidth="314.0" styleClass="bold" text="Niepoprawna nazwa miejscowości" visible="false" AnchorPane.bottomAnchor="7.0" />
+      <Label fx:id="errorLabel" alignment="CENTER" layoutX="-1.0" layoutY="202.0" prefHeight="17.0" prefWidth="314.0" styleClass="bold" visible="false" AnchorPane.bottomAnchor="7.0" />
     </children>
 </AnchorPane>

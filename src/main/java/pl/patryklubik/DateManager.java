@@ -2,8 +2,13 @@ package pl.patryklubik;
 
 import pl.patryklubik.model.Config;
 
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
+import java.util.Locale;
 
 /**
  * Create by Patryk Łubik on 29.01.2021.
@@ -11,12 +16,14 @@ import java.util.*;
 
 public class DateManager {
 
-    public static final String FULL_DAY_OF_WEEKDAY_PATTERN = "EEEEEEE";
+    public static final String FULL_DAY_OF_WEEKDAY_PATTERN = "EEEE";
     public static final String DATE_PATTERN = "dd-MM-yyyy";
     public static final String DAY_NUMBER_PATTERN = "dd";
 
+
     public String convertTimeToDayOfWeek(long time, String countryCode) {
-        return getDateFromPattern(FULL_DAY_OF_WEEKDAY_PATTERN, getTimeZone(countryCode), time);
+
+        return formatDateData(countryCode, FULL_DAY_OF_WEEKDAY_PATTERN, time);
     }
 
     public String getCurrentDayOfWeek(String countryCode) {
@@ -29,41 +36,6 @@ public class DateManager {
         return formatDateData(countryCode, DATE_PATTERN);
     }
 
-    private String formatDateData(String countryCode, String pattern) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-        GregorianCalendar calendar = new GregorianCalendar();
-
-        simpleDateFormat.setTimeZone(getTimeZone(countryCode));
-
-        return simpleDateFormat.format(calendar.getTime());
-    }
-
-    private String formatDateData(String countryCode, String pattern, long time) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-        GregorianCalendar calendar = new GregorianCalendar();
-
-        simpleDateFormat.setTimeZone(getTimeZone(countryCode));
-        calendar.setTimeInMillis(time);
-
-        return simpleDateFormat.format(calendar.getTime());
-    }
-
-    public String getTimeZoneName(String countryCode) {
-
-        return getTimeZone(countryCode).getDisplayName(true, 0);
-    }
-
-    private String getDateFromPattern(String pattern, TimeZone timeZone, long time) {
-        Locale appLocale = new Locale(Config.getAppLanguage());
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern,appLocale);
-        GregorianCalendar calendar = new GregorianCalendar();
-
-        simpleDateFormat.setTimeZone(timeZone);
-        calendar.setTimeInMillis(time);
-
-        return simpleDateFormat.format(calendar.getTime());
-    }
-
     public String getCurrentDayNumberInCountry(String countryCode) {
 
         return formatDateData(countryCode, DAY_NUMBER_PATTERN);
@@ -74,9 +46,32 @@ public class DateManager {
         return formatDateData(countryCode, DAY_NUMBER_PATTERN, time);
     }
 
-    private TimeZone getTimeZone(String countryCode) {
-        String countryTimeZoneId = com.ibm.icu.util.TimeZone.getAvailableIDs(countryCode)[0];
+    private String formatDateData(String countryCode, String pattern, long time) {
 
-        return TimeZone.getTimeZone(countryTimeZoneId);
+        ZoneId countryZoneId = ZoneId.of(getTimeZone(countryCode));
+        LocalDateTime setDateTimeInZone = LocalDateTime.ofInstant(Instant.ofEpochMilli (time), countryZoneId);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
+
+        return dateTimeFormatter.format(setDateTimeInZone);
+    }
+
+    private String formatDateData(String countryCode, String pattern) {
+
+        ZonedDateTime zonedDateTimeInCountry = ZonedDateTime.now(ZoneId.of(getTimeZone(countryCode)));
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
+
+        return zonedDateTimeInCountry.format(dateTimeFormatter);
+    }
+
+    public String getTimeZoneName(String countryCode) {
+
+        ZoneId countryZoneId = ZoneId.of(getTimeZone(countryCode));
+
+        return countryZoneId.getDisplayName(TextStyle.SHORT, new Locale(Config.getAppLanguage()));
+    }
+
+    private String getTimeZone(String countryCode) {
+
+        return com.ibm.icu.util.TimeZone.getAvailableIDs(countryCode)[0];
     }
 }

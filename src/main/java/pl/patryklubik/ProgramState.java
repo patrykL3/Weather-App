@@ -1,8 +1,6 @@
 package pl.patryklubik;
 
-import pl.patryklubik.model.ApplicationData;
-import pl.patryklubik.model.City;
-import pl.patryklubik.model.CityType;
+import pl.patryklubik.model.*;
 import pl.patryklubik.view.ViewFactory;
 
 import java.util.List;
@@ -17,11 +15,13 @@ public class ProgramState {
     private ViewFactory viewFactory;
     private ApplicationData applicationData;
     private CitiesManager citiesManager;
+    protected static LanguageData languageData;
 
     public ProgramState() {
         citiesManager = new CitiesManager();
         applicationData = new ApplicationData(citiesManager);
         viewFactory = new ViewFactory(citiesManager);
+        languageData = new LanguageData(Config.getAppLanguage());
     }
 
 

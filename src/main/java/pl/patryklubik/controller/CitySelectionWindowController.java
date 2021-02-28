@@ -3,6 +3,7 @@ package pl.patryklubik.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -10,6 +11,7 @@ import javafx.stage.Stage;
 import pl.patryklubik.CitiesManager;
 import pl.patryklubik.controller.services.WeatherDataService;
 import pl.patryklubik.model.CityType;
+import pl.patryklubik.model.LanguageData;
 import pl.patryklubik.view.ViewFactory;
 
 import java.net.URL;
@@ -22,10 +24,13 @@ public class CitySelectionWindowController extends BaseController implements Ini
 
     private final WeatherDataService weatherDataService;
     private final CityType cityType;
-    private final String INVALID_CITY_NAME_MESSAGE = "NIEPOPRAWNA NAZWA MIEJSCOWOŚCI";
-    private final String UNEXPECTED_ERROR_MESSAGE = "NIESPODZIEWANY BŁĄD";
-    private final String DEFAULT_CITY_HEADER_LABEL_TEXT = "Wprowadź nazwę Twojego miasta:";
-    private final String ADDITIONAL_CITY_HEADER_LABEL_TEXT = "Wprowadź nazwę dodatkowego miasta:";
+
+    private final String SUBMIT_BUTTON_TEXT = LanguageData.getText("SUBMIT_TEXT");
+    private final String CANCEL_BUTTON_TEXT = LanguageData.getText("CANCEL_TEXT");
+    private final String INVALID_CITY_NAME_MESSAGE = LanguageData.getText("INVALID_CITY_NAME_LABEL_TEXT");
+    private final String UNEXPECTED_ERROR_LABEL_TEXT = LanguageData.getText("UNEXPECTED_ERROR_LABEL_TEXT");
+    private final String DEFAULT_CITY_HEADER_LABEL_TEXT = LanguageData.getText("DEFAULT_CITY_HEADER_LABEL_TEXT");
+    private final String ADDITIONAL_CITY_HEADER_LABEL_TEXT = LanguageData.getText("ADDITIONAL_CITY_HEADER_LABEL_TEXT");
 
     @FXML
     private TextField cityField;
@@ -35,6 +40,12 @@ public class CitySelectionWindowController extends BaseController implements Ini
 
     @FXML
     private Label headerLabel;
+
+    @FXML
+    private Button cancelButton;
+
+    @FXML
+    private Button submitButton;
 
     public CitySelectionWindowController(CitiesManager citiesManager, ViewFactory viewFactory,
                                          String fxmlName, CityType cityType) {
@@ -71,7 +82,7 @@ public class CitySelectionWindowController extends BaseController implements Ini
                 errorLabel.setVisible(true);
                 return;
             case FAILED_BY_UNEXPECTED_ERROR:
-                errorLabel.setText(UNEXPECTED_ERROR_MESSAGE);
+                errorLabel.setText(UNEXPECTED_ERROR_LABEL_TEXT);
                 errorLabel.setVisible(true);
                 return;
         }
@@ -80,6 +91,8 @@ public class CitySelectionWindowController extends BaseController implements Ini
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setHeaderLabel(cityType);
+        cancelButton.setText(CANCEL_BUTTON_TEXT);
+        submitButton.setText(SUBMIT_BUTTON_TEXT);
         if (citiesManager.getCityByType(cityType).getCityName() != null) {
             cityField.setText(citiesManager.getCityByType(cityType).getCityName());
         }
