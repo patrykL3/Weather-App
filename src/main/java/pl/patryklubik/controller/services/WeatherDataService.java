@@ -26,6 +26,10 @@ public class WeatherDataService extends Service<ResultDownloadWeatherData> {
     private final String accuracy = Accuracy.ACCURATE;
     private final City city;
 
+    public WeatherDataService(CitiesManager citiesManager, CityType cityType, OpenWeatherMapManager openWeatherMapManager) {
+        openWeatherManager = openWeatherMapManager;
+        this.city = citiesManager.getCityByType(cityType);
+    }
 
     public WeatherDataService(CitiesManager citiesManager, CityType cityType) {
         openWeatherManager = new OpenWeatherMapManager(Config.getToken());
