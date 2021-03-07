@@ -1,7 +1,5 @@
 package pl.patryklubik.model;
 
-import com.github.prominence.openweathermap.api.model.response.Weather;
-
 /**
  * Create by Patryk Łubik on 27.01.2021.
  */
@@ -18,6 +16,10 @@ public class City {
         this.cityType = cityType;
     }
 
+    public City(CityType cityType, String cityName) {
+        this.cityType = cityType;
+        this.cityName = cityName;
+    }
 
     public CurrentWeather getCurrentWeather() {
         return currentWeather;
