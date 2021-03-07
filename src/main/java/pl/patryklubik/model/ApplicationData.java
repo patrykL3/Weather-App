@@ -11,16 +11,16 @@ import java.util.Map;
 /**
  * Create by Patryk Łubik on 04.02.2021.
  */
+
 public class ApplicationData {
 
-    private final String DATA_LOCATION = System.getProperty("user.home") + File.separator + "weatherAppData.ser";
-    private CitiesManager citiesManager;
-    private Map<CityType,String> dataMap = new EnumMap<>(CityType.class);
+    private static String DATA_LOCATION = System.getProperty("user.home") + File.separator + "weatherAppData.ser";
+    private final CitiesManager citiesManager;
+    private Map<CityType,String> citiesDataMap = new EnumMap<>(CityType.class);
 
 
     public ApplicationData(CitiesManager citiesManager) {
         this.citiesManager = citiesManager;
-        loadData();
     }
 
     public void loadData() {
@@ -31,18 +31,18 @@ public class ApplicationData {
             if (fileWithData.exists()) {
                 FileInputStream fileInputStream = new FileInputStream(DATA_LOCATION);
                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-                EnumMap<CityType,String> cities = (EnumMap<CityType,String>) objectInputStream.readObject();
-                dataMap = cities;
+                citiesDataMap = (Map<CityType,String>) objectInputStream.readObject();
+                fileInputStream.close();
 
-                loadCityData(cities, CityType.DEFAULT);
-                loadCityData(cities, CityType.ADDITIONAL);
+                loadCityData(citiesDataMap, CityType.DEFAULT);
+                loadCityData(citiesDataMap, CityType.ADDITIONAL);
             }
 
         } catch ( Exception ignored) {}
 
     }
 
-    private void loadCityData(EnumMap<CityType,String>  cities, CityType cityType) {
+    private void loadCityData(Map<CityType,String>  cities, CityType cityType) {
         WeatherDataService weatherDataService = new WeatherDataService(citiesManager, cityType);
         weatherDataService.setCityName(cities.get(cityType));
         weatherDataService.restart();
@@ -54,15 +54,15 @@ public class ApplicationData {
 
         for (City city : cities) {
             if (city.getCityName() != null && !city.getCityName().equals("")) {
-                dataMap.put(city.getCityType(),city.getCityName());
+                citiesDataMap.put(city.getCityType(),city.getCityName());
             }
         }
 
-        if (!(dataMap.get(CityType.DEFAULT).isEmpty())) {
+        if (!(citiesDataMap.get(CityType.DEFAULT).isEmpty())) {
             try (FileOutputStream fileOutputStream = new FileOutputStream(file);
                  ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
 
-                objectOutputStream.writeObject(dataMap);
+                objectOutputStream.writeObject(citiesDataMap);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -72,12 +72,23 @@ public class ApplicationData {
 
     public boolean cityExist(CityType cityType) {
 
-        return dataMap.get(cityType) != null && !dataMap.get(cityType).equals("");
+        return citiesDataMap.get(cityType) != null && !citiesDataMap.get(cityType).equals("");
     }
 
     public String getCityName(CityType cityType) {
 
-        return dataMap.get(cityType);
+        return citiesDataMap.get(cityType);
     }
 
+    public static void setDataLocation(String dataLocation) {
+        DATA_LOCATION = dataLocation;
+    }
+
+    public void setCitiesDataMap(Map<CityType, String> citiesDataMap) {
+        this.citiesDataMap = citiesDataMap;
+    }
+
+    public Map<CityType, String> getCitiesDataMap() {
+        return citiesDataMap;
+    }
 }

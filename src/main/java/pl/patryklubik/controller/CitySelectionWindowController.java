@@ -54,6 +54,17 @@ public class CitySelectionWindowController extends BaseController implements Ini
         this.weatherDataService = new WeatherDataService(citiesManager, cityType);
     }
 
+    public CitySelectionWindowController(CitiesManager citiesManager, ViewFactory viewFactory,
+                                         String fxmlName, CityType cityType, TextField cityField, Label errorLabel,
+                                         WeatherDataService weatherDataService) {
+        super(citiesManager, viewFactory, fxmlName);
+        this.cityType = cityType;
+        this.cityField = cityField;
+        this.errorLabel = errorLabel;
+        this.weatherDataService = weatherDataService;
+    }
+
+
     @FXML
     void cancelButtonAction(ActionEvent event) {
         Stage thisStage = (Stage) errorLabel.getScene().getWindow();

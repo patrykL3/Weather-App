@@ -12,9 +12,9 @@ import java.util.List;
 
 public class ProgramState {
 
-    private ViewFactory viewFactory;
-    private ApplicationData applicationData;
-    private CitiesManager citiesManager;
+    private final ViewFactory viewFactory;
+    private final ApplicationData applicationData;
+    private final CitiesManager citiesManager;
     protected static LanguageData languageData;
 
     public ProgramState() {
@@ -24,6 +24,11 @@ public class ProgramState {
         languageData = new LanguageData(Config.getAppLanguage());
     }
 
+    public ProgramState(ViewFactory viewFactory, ApplicationData applicationData, CitiesManager citiesManager) {
+        this.viewFactory = viewFactory;
+        this.applicationData = applicationData;
+        this.citiesManager = citiesManager;
+    }
 
     public void init() {
         checkData();

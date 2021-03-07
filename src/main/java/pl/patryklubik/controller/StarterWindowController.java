@@ -53,6 +53,15 @@ public class StarterWindowController extends BaseController implements Initializ
         this.weatherDataService = new WeatherDataService(citiesManager, CityType.DEFAULT);
     }
 
+    public StarterWindowController(CitiesManager citiesManager, ViewFactory viewFactory, String fxmlName,
+                                   TextField defaultCityField, Label errorLabel,
+                                   WeatherDataService weatherDataService) {
+        super(citiesManager, viewFactory, fxmlName);
+        this.defaultCityField = defaultCityField;
+        this.errorLabel = errorLabel;
+        this.weatherDataService = weatherDataService;
+    }
+
     @FXML
     void defaultCitySelectButtonAction() {
         if (fieldAreValid()) {

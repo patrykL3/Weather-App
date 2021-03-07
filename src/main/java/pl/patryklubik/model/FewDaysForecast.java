@@ -15,8 +15,8 @@ import java.util.List;
 
 public class FewDaysForecast {
 
-    private HourlyForecast fullWeatherForecast;
-    private DateManager dateManager = new DateManager();
+    private final HourlyForecast fullWeatherForecast;
+    private final DateManager dateManager = new DateManager();
     public static final int NUMBER_POINT_IN_ONE_DAY = 8;
 
     public FewDaysForecast(HourlyForecast fullWeatherForecast) {
