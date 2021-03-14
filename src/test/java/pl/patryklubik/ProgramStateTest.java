@@ -2,7 +2,9 @@ package pl.patryklubik;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import pl.patryklubik.model.ApplicationData;
 import pl.patryklubik.view.ViewFactory;
 
@@ -11,19 +13,19 @@ import static org.mockito.Mockito.*;
 /**
  * Create by Patryk Łubik on 07.03.2021.
  */
+
+@ExtendWith(MockitoExtension.class)
 class ProgramStateTest {
 
     private ProgramState programState;
 
     @Mock
-    ViewFactory viewFactoryMock;
+    private ViewFactory viewFactoryMock;
     @Mock
-    ApplicationData applicationDataMock;
+    private ApplicationData applicationDataMock;
 
     @BeforeEach
     void setUp() {
-        viewFactoryMock = mock(ViewFactory.class);
-        applicationDataMock = mock(ApplicationData.class);
         programState = new ProgramState(viewFactoryMock, applicationDataMock, new CitiesManager());
     }
 

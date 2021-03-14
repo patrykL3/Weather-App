@@ -1,14 +1,12 @@
 package pl.patryklubik;
 
-import pl.patryklubik.model.Config;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.Locale;
+
+import static pl.patryklubik.model.Config.getAppLanguage;
 
 /**
  * Create by Patryk Łubik on 29.01.2021.
@@ -19,7 +17,13 @@ public class DateManager {
     public static final String FULL_DAY_OF_WEEKDAY_PATTERN = "EEEE";
     public static final String DATE_PATTERN = "dd-MM-yyyy";
     public static final String DAY_NUMBER_PATTERN = "dd";
+    private Clock clock;
 
+    public DateManager() {}
+
+    public DateManager(Clock clock) {
+        this.clock = clock;
+    }
 
     public String convertTimeToDayOfWeek(long time, String countryCode) {
 
@@ -50,24 +54,26 @@ public class DateManager {
 
         ZoneId countryZoneId = ZoneId.of(getTimeZone(countryCode));
         LocalDateTime setDateTimeInZone = LocalDateTime.ofInstant(Instant.ofEpochMilli (time), countryZoneId);
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
+        DateTimeFormatter dateTimeFormatter =
+                DateTimeFormatter.ofPattern(pattern).withLocale(Locale.forLanguageTag(getAppLanguage()));
 
         return dateTimeFormatter.format(setDateTimeInZone);
     }
 
     private String formatDateData(String countryCode, String pattern) {
 
-        ZonedDateTime zonedDateTimeInCountry = ZonedDateTime.now(ZoneId.of(getTimeZone(countryCode)));
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
+        if(clock == null) {
+            clock = Clock.system(ZoneId.of(getTimeZone(countryCode)));
+        }
 
-        return zonedDateTimeInCountry.format(dateTimeFormatter);
+        return formatDateData(countryCode, pattern, Instant.now(clock).toEpochMilli());
     }
 
     public String getTimeZoneName(String countryCode) {
 
         ZoneId countryZoneId = ZoneId.of(getTimeZone(countryCode));
 
-        return countryZoneId.getDisplayName(TextStyle.SHORT, new Locale(Config.getAppLanguage()));
+        return countryZoneId.getDisplayName(TextStyle.SHORT, new Locale(getAppLanguage()));
     }
 
     private String getTimeZone(String countryCode) {

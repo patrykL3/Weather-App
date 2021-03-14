@@ -7,8 +7,10 @@ import javafx.scene.control.TextField;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InOrder;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import pl.patryklubik.CitiesManager;
 import pl.patryklubik.controller.services.WeatherDataService;
 import pl.patryklubik.model.*;
@@ -23,13 +25,12 @@ import static org.mockito.Mockito.*;
  * Create by Patryk Łubik on 01.03.2021.
  */
 
+@ExtendWith(MockitoExtension.class)
 class StarterWindowControllerTest {
 
     private TextField defaultCityField;
     private Label errorLabel;
     private StarterWindowController starterWindowController;
-    private LanguageData languageData;
-
 
     @Mock
     private ViewFactory viewFactoryMock;
@@ -41,7 +42,9 @@ class StarterWindowControllerTest {
 
 
     @BeforeAll
-    public static void setUpToolkit() {
+    public static void setUpBeforeAll() {
+
+        LanguageData.init(Language.POLISH);
         try {
             Platform.startup(() -> System.out.println("Toolkit initialized ..."));
         } catch (Exception ignored) {}
@@ -54,8 +57,6 @@ class StarterWindowControllerTest {
         defaultCityField = new TextField();
         errorLabel = new Label();
         errorLabel.setVisible(false);
-        languageData = new LanguageData(Language.POLISH);
-        weatherDataServiceMock = mock(WeatherDataService.class);
 
         starterWindowController = new StarterWindowController (
                 citiesManagerMock,
@@ -69,6 +70,9 @@ class StarterWindowControllerTest {
 
     @Test
     void errorLabelShouldBeVisibleWhenUserTrySubmitCityWithEmptyTextField() {
+
+        //given
+        defaultCityField.clear();
 
         //when
         starterWindowController.defaultCitySelectButtonAction();
