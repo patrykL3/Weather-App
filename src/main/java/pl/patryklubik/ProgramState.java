@@ -15,13 +15,12 @@ public class ProgramState {
     private final ViewFactory viewFactory;
     private final ApplicationData applicationData;
     private final CitiesManager citiesManager;
-    protected static LanguageData languageData;
 
     public ProgramState() {
         citiesManager = new CitiesManager();
         applicationData = new ApplicationData(citiesManager);
         viewFactory = new ViewFactory(citiesManager);
-        languageData = new LanguageData(Config.getAppLanguage());
+        LanguageData.init(Config.getAppLanguage());
     }
 
     public ProgramState(ViewFactory viewFactory, ApplicationData applicationData, CitiesManager citiesManager) {

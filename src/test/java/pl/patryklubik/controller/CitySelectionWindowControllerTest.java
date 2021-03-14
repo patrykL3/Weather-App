@@ -7,8 +7,10 @@ import javafx.scene.control.TextField;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InOrder;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import pl.patryklubik.CitiesManager;
 import pl.patryklubik.controller.services.WeatherDataService;
 import pl.patryklubik.model.CityType;
@@ -22,13 +24,13 @@ import static org.mockito.Mockito.*;
 /**
  * Create by Patryk Łubik on 04.03.2021.
  */
+
+@ExtendWith(MockitoExtension.class)
 class CitySelectionWindowControllerTest {
 
     private CitySelectionWindowController citySelectionWindowController;
     private TextField cityField;
-    private CitiesManager citiesManager;
     private Label errorLabel;
-    private LanguageData languageData;
 
     @Mock
     private WeatherDataService weatherDataServiceMock;
@@ -37,7 +39,9 @@ class CitySelectionWindowControllerTest {
 
 
     @BeforeAll
-    public static void setUpToolkit() {
+    public static void setUpBeforeAll() {
+
+        LanguageData.init(Language.POLISH);
         try {
             Platform.startup(() -> System.out.println("Toolkit initialized ..."));
         } catch (Exception ignored) {}
@@ -47,13 +51,11 @@ class CitySelectionWindowControllerTest {
     public void setUp() {
 
         cityField = new TextField();
-        languageData = new LanguageData(Language.POLISH);
-        citiesManager = new CitiesManager();
+
+        CitiesManager citiesManager = new CitiesManager();
         errorLabel = new Label();
         errorLabel.setVisible(false);
-        viewFactoryMock = mock(ViewFactory.class);
 
-        weatherDataServiceMock = mock(WeatherDataService.class);
         citySelectionWindowController = new CitySelectionWindowController(
                 citiesManager,
                 viewFactoryMock,

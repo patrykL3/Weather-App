@@ -2,9 +2,9 @@ package pl.patryklubik;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.Clock;
+import java.time.Instant;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
@@ -16,7 +16,10 @@ import static org.hamcrest.Matchers.equalTo;
  */
 class DateManagerTest {
 
-    private DateManager dateManager = new DateManager();
+    private final String currentDateToClock = "2021-03-14T16:00:00.00Z";
+    private final ZoneId zoneIdToClock = ZoneId.of("Europe/Warsaw");
+    private final DateManager dateManager = new DateManager(Clock.fixed(Instant.parse(currentDateToClock), zoneIdToClock));
+
 
     @Test
     void convertingLongFormatTimeToDayOfWeekShouldReturnCorrectValue() {
@@ -32,7 +35,7 @@ class DateManagerTest {
     void getCurrentDayOfWeekShouldReturnCorrectValue() {
 
         //given
-        String currentDay = getCurrentDateData("Europe/Warsaw", "EEEE");
+        String currentDay = "niedziela";
 
         //when
         String currentDayFromApplicationMethod = dateManager.getCurrentDayOfWeek("pl");
@@ -45,7 +48,7 @@ class DateManagerTest {
     void getCurrentDateShouldReturnCorrectValue() {
 
         //given
-        String currentDate = getCurrentDateData("Europe/Warsaw", "dd-MM-yyyy");
+        String currentDate = "14-03-2021";
 
         //when
         String currentDateFromApplicationMethod = dateManager.getCurrentDate("pl");
@@ -58,7 +61,7 @@ class DateManagerTest {
     void getCurrentDayNumberInCountryShouldReturnCorrectValue() {
 
         //given
-        String currentDayNumber = getCurrentDateData("Europe/Warsaw", "dd");
+        String currentDayNumber = "14";
 
         //when
         String currentDayNumberFromApplicationMethod = dateManager.getCurrentDayNumberInCountry("pl");
@@ -73,7 +76,7 @@ class DateManagerTest {
     void convertingLongFormatTimeToDayNumberInCountryShouldReturnCorrectValue() {
 
         //given
-        Long timeInLong = 1615140000000L;
+        long timeInLong = 1615140000000L;
         String polishDayNumberForTimeInLong = "07";
 
         //when
@@ -95,14 +98,5 @@ class DateManagerTest {
 
         //then
         assertThat(correctTimeZoneName, equalTo(timeZoneNameFromAppMethod));
-    }
-
-
-    private String getCurrentDateData(String timeZone, String pattern) {
-
-        ZonedDateTime zonedDateTimeInCountry = ZonedDateTime.now(ZoneId.of(timeZone));
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
-
-        return zonedDateTimeInCountry.format(dateTimeFormatter);
     }
 }

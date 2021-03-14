@@ -5,8 +5,10 @@ import javafx.application.Platform;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import pl.patryklubik.CitiesManager;
 import pl.patryklubik.model.CityType;
 import pl.patryklubik.model.LanguageData;
@@ -18,17 +20,19 @@ import static org.mockito.Mockito.*;
 /**
  * Create by Patryk Łubik on 05.03.2021.
  */
+
+@ExtendWith(MockitoExtension.class)
 class MainWindowControllerTest {
 
     private MainWindowController mainWindowController;
-    private CitiesManager citiesManager;
-    private LanguageData languageData;
 
     @Mock
     private ViewFactory viewFactoryMock;
 
     @BeforeAll
-    public static void setUpToolkit() {
+    public static void setUpBeforeAll() {
+
+        LanguageData.init(Language.POLISH);
         try {
             Platform.startup(() -> System.out.println("Toolkit initialized ..."));
         } catch (Exception ignored) {}
@@ -37,9 +41,7 @@ class MainWindowControllerTest {
     @BeforeEach
     public void setUp() {
 
-        viewFactoryMock = mock(ViewFactory.class);
-        languageData = new LanguageData(Language.POLISH);
-        citiesManager = new CitiesManager();
+        CitiesManager citiesManager = new CitiesManager();
 
         mainWindowController = new MainWindowController(
                 citiesManager,

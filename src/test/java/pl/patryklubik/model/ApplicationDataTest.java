@@ -1,8 +1,8 @@
 package pl.patryklubik.model;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import pl.patryklubik.CitiesManager;
 
 import java.io.File;
@@ -20,23 +20,18 @@ import static org.hamcrest.Matchers.*;
 class ApplicationDataTest {
 
     private ApplicationData applicationData;
-    private CitiesManager citiesManager;
-    private String nameFileWithData = "testData.ser";
-    private File fileWithData = new File(nameFileWithData);
+    private static final String NAME_FILE_WITH_DATA = "testData.ser";
+    @TempDir
+    public File fileWithData;
 
 
     @BeforeEach
     public void setUp() {
 
-        citiesManager = new CitiesManager();
+        CitiesManager citiesManager = new CitiesManager();
         applicationData = new ApplicationData(citiesManager);
-        applicationData.setDataLocation(nameFileWithData);
+        ApplicationData.setDataLocation(fileWithData.getAbsolutePath() + NAME_FILE_WITH_DATA);
 
-    }
-
-    @AfterEach
-    public void clean() {
-        fileWithData.delete();
     }
 
     @Test
@@ -47,11 +42,11 @@ class ApplicationDataTest {
 
         //when
         applicationData.saveData(cities);
-        Map dataCitiesMapFromSavedData = applicationData.getCitiesDataMap();
+        Map<CityType, String> dataCitiesMapFromSavedData = applicationData.getCitiesDataMap();
 
         applicationData = new ApplicationData(new CitiesManager());
         applicationData.loadData();
-        Map dataCitiesMapFromLoadedData = applicationData.getCitiesDataMap();
+        Map<CityType, String> dataCitiesMapFromLoadedData = applicationData.getCitiesDataMap();
 
         //then
         assertThat(dataCitiesMapFromLoadedData, equalTo(dataCitiesMapFromSavedData));

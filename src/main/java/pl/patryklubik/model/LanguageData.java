@@ -19,7 +19,7 @@ public class LanguageData {
             "HUMIDITY_UNIT_IN_LABEL_TEXT","%");
 
 
-    private Map<String, String> polishPhrases = Stream.of(new String[][] {
+    private static final Map<String, String> polishPhrases = Stream.of(new String[][] {
 
         { "APPLICATION_NAME", "WEATHER-APP" },
         { "SUBMIT_TEXT","Zatwierdź" },
@@ -44,8 +44,9 @@ public class LanguageData {
 
     }).collect(Collectors.toMap(data -> data[0], data -> data[1]));
 
+    private LanguageData(){}
 
-    public LanguageData(String languageOfLabels) {
+    public static void init(String languageOfLabels) {
         LANGUAGE_OF_LABELS = languageOfLabels;
         APPLICATION_LANGUAGES_MAP.put("pl", polishPhrases);
     }
